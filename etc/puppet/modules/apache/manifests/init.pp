@@ -35,19 +35,31 @@ class apache (
     vhost_dir     => $vhost_dir,
   }
 
-  apache::vhost { "mtulio.eng.br":
-    port          => 80,
-    document_root => "${document_root}/mtulio.eng.br",
-    servername    => "mtulio.eng.br",
-    vhost_dir     => $vhost_dir,
-  }
-  
-  apache::vhost { "ict-eng.net":
-    port          => 80,
-    document_root => "${document_root}/ict-eng.net",
-    servername    => "ict-eng.net",
-    vhost_dir     => $vhost_dir,
-  }
+  case $::hostname {
+    # Apply N vhosts for hostname 'pmaster'
+    'pmaster': {
+      apache::vhost { "site1.mtulio.eng.br":
+        port          => 80,
+        document_root => "${document_root}/site1.mtulio.eng.br",
+        servername    => "site1.mtulio.eng.br",
+        vhost_dir     => $vhost_dir,
+      }
+      apache::vhost { "site2.mtulio.eng.br":
+        port          => 80,
+        document_root => "${document_root}/site2.mtulio.eng.br",
+        servername    => "site2.mtulio.eng.br",
+        vhost_dir     => $vhost_dir,
+      }
 
-
+    }
+    # Apply Y vhosts for hostname 's1'
+    's1': {
+       apache::vhost { "ict-eng.net":
+         port          => 80,
+         document_root => "${document_root}/ict-eng.net",
+         servername    => "ict-eng.net",
+         vhost_dir     => $vhost_dir,
+       }
+    }
+  }
 }
