@@ -17,14 +17,22 @@ class apache (
 
   # add resource name - document root
   file { $document_root: 
-    ensure => directory,
+    ensure  => directory,
     recurse => true,     # create all files and locations : /var/www/websites
   }
 
   # add log dir verification/creation
   file { $log_dir:
-    ensure => directory,
+    ensure  => directory,
     recurse => true,
+  }
+
+  # Add virtual host config - default vhost config
+  apache::vhost { "default": 
+    port          => 80,
+    document_root => $document_root,
+    servername    => $servername,
+    vhost_dir     => $vhost_dir,
   }
 
 }

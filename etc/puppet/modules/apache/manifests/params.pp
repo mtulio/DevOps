@@ -16,7 +16,7 @@ class apache::params {
       $package_name = "httpd"
       $service_name = "httpd"
       $conf_dir     = "/etc/httpd/conf"
-      $vhost_dir     = "/etc/httpd/conf"
+      $vhost_dir     = "/etc/httpd/conf.d"
     }
     'Debian' : {
       $package_name = "apache2"
