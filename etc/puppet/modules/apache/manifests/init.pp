@@ -15,11 +15,11 @@ class apache (
   include apache::package
   include apache::service
 
-  # add resource name - document root
-  file { $document_root: 
-    ensure  => directory,
-    recurse => true,     # create all files and locations : /var/www/websites
-  }
+  # add resource name - document root (removed when use multiples virtualhosts see vhosts.pp)
+  #file { $document_root: 
+  #  ensure  => directory,
+  #  recurse => true,     # create all files and locations : /var/www/websites
+  #}
 
   # add log dir verification/creation
   file { $log_dir:
@@ -34,5 +34,20 @@ class apache (
     servername    => $servername,
     vhost_dir     => $vhost_dir,
   }
+
+  apache::vhost { "mtulio.eng.br":
+    port          => 80,
+    document_root => "${document_root}/mtulio.eng.br",
+    servername    => "mtulio.eng.br",
+    vhost_dir     => $vhost_dir,
+  }
+  
+  apache::vhost { "ict-eng.net":
+    port          => 80,
+    document_root => "${document_root}/ict-eng.net",
+    servername    => "ict-eng.net",
+    vhost_dir     => $vhost_dir,
+  }
+
 
 }

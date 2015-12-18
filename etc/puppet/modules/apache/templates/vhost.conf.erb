@@ -1,3 +1,7 @@
+# Set multiple Vhosts in a single IP
+
+NameVirtualHost *:<%= @port -%>
+
 <VirtualHost *:<%= @port -%>>
   Servername <%= @servername %>
   ServerAdmin webmaster@ict-eng.net
