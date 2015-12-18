@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby ts=2 sw=2 expandtab:
+
+Vagrant.configure(2) do |config|
+
+  # ajusta do default provider para o virtualbox
+  ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+
+  # CentOS 6.6
+  config.vm.box = "boxcutter/centos66"
+
+  # master - balanceador de carga (HAProxy) e controlador do domínio (master)
+  config.vm.define "mtuliod" do |mtuliod|
+    mtuliod.vm.hostname="mtuliod"
+    mtuliod.vm.network "private_network", ip: "172.17.1.100"
+    mtuliod.vm.provider "virtualbox" do |v|
+      v.memory = 512
+    end
+  end
+end

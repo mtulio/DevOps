@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby ts=2 sw=2 expandtab:
+
+Vagrant.configure(2) do |config|
+
+  # ajusta do default provider para o virtualbox
+  ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+
+  # CentOS 7
+  config.vm.box = "chef/centos-7.0"
+
+  # master - balanceador de carga (HAProxy) e controlador do domínio (master)
+  config.vm.define "pmaster" do |pmaster|
+    pmaster.vm.hostname="pmaster"
+    pmaster.vm.network "private_network", ip: "172.17.1.10"
+    pmaster.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+    end
+  end
+end
