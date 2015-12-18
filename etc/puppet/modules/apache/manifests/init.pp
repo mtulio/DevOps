@@ -11,5 +11,8 @@ class apache (
 ) inherits apache::params {
 
   # including classes
+   #class {'apache::package' : package_name ...  (formaERRADA)
+  include apache::package
+  include apache::service
 
 }
