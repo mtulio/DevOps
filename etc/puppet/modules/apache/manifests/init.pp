@@ -15,4 +15,16 @@ class apache (
   include apache::package
   include apache::service
 
+  # add resource name - document root
+  file { $document_root: 
+    ensure => directory,
+    recurse => true,     # create all files and locations : /var/www/websites
+  }
+
+  # add log dir verification/creation
+  file { $log_dir:
+    ensure => directory,
+    recurse => true,
+  }
+
 }
