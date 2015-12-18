@@ -1,0 +1,46 @@
+
+# Download & Install 
+# https://releases.hashicorp.com/vagrant/1.7.4/vagrant_1.7.4_x86_64.rpm
+yum install https://releases.hashicorp.com/vagrant/1.7.4/vagrant_1.7.4_x86_64.rpm
+
+[Virtualbox]
+yum install kernel-devel
+wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
+yum repolist
+yum list Virtual
+yum install VirtualBox-4.3.x86_64
+
+
+# Export HOME Dir
+source ./vm_manage.conf
+VAGRANT_HOME="$_VAGRAMT_HOME"
+
+
+#> This plugin can also convert to KVM friendly boxes.
+$ sudo yum install qemu-img
+$ vagrant plugin install vagrant-mutate
+vagrant box add precise32 http://files.vagrantup.com/precise32.box
+
+# Converting precise32 from virtualbox to libvirt.
+vagrant mutate precise32 libvirt
+
+# Include boxes
+vagrant box add centos-6 https://download.gluster.org/pub/gluster/purpleidea/vagrant/centos-6.box --provider=libvirt
+
+# Install provider deps
+yum install libvirt-devel libxslt-devel libxml2-devel
+yum groupinstall "Development tools"
+vagrant plugin install vagrant-libvirt
+export VAGRANT_DEFAULT_PROVIDER=libvirt
+
+# Export provider
+
+
+#########
+* Instalar vagrant
+* Instalar Virtualbox
+* Verificar boxes
+* instalar box [sem Vagrantfile]:
+vagrant init puppetlabs/centos-7.0-64-puppet; vagrant up --provider virtualbox
+
+

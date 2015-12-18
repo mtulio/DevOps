@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+ 
+VAGRANTFILE_API_VERSION = "2"
+ 
+# NOTE: vagrant-libvirt needs to run in series (not in parallel) to avoid
+# trying to create the network twice... eg: vagrant up --no-parallel
+# alternatively, you can just create the vm's one at a time manually...
+ 
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+   # Every Vagrant virtual environment requires a box to build from
+    config.vm.box = "centos-72"        
+ 
+    # List each virtual machine
+    config.vm.define :pmaster do |pmaster|
+        pmaster.vm.network :private_network,
+            :ip => "192.168.100.101",    # choose your own!
+            :libvirt__network_name => "default"  # leave it
+    end
+ 
+    # Provider-specific configuration
+    config.vm.provider :libvirt do |libvirt|
+        libvirt.driver = "qemu"
+        # leave out host to connect directly with qemu:///system
+        #libvirt.host = "localhost"
+        libvirt.connect_via_ssh = false     # also needed
+        libvirt.username = "root"
+        libvirt.storage_pool_name = "default"
+    end
+ 
+end
+
+

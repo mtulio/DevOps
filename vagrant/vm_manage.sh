@@ -12,9 +12,11 @@ usage() {
 
 
 # Globals
+#_VAGRAMT_HOME="/home/workDir/MaquinasVirtuais/vagrant/vagrant.d"
+source $(dirname $0)/vm_manage.conf
 
 VAGRANT_CMD="$(which vagrant)"
-VAGRANT_HOME="/home/workDir/MaquinasVirtuais/vagrant/vagrant.d"		# Change Me
+VAGRANT_HOME="$_VAGRAMT_HOME"		# Change Me
 VAGRANT_VAGRANTFILE="Vagrantfile"
 
 if [ ! -x ${VAGRANT_CMD} ]; then
