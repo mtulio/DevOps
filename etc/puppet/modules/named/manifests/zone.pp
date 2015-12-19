@@ -1,18 +1,28 @@
-define named::zone ($server_type, $domain, $zone_file) 
+define named::zone ($domain, $zone_dir, $zone_file) 
 {
 
-  # define permissoes
-  File {
-    mode => 0677,
+  # define permissoes (substituido abaixo)
+#  File {
+#    mode => 0660,
+#  }
+
+  # Create a dir from destination zone
+  file { $zone_dir :
+    ensure  => directory,
+    recurse => true,
+    #create_parents => true,
+    owner   => 'root',
+    group   => 'named',
+    mode    => 0750,
   }
 
   # Mapeia os arquivos de zona no master
   case $domain {
     'example1.gov.br' : {
-      $zone_puppet_files = "named/db.example1.gov.br"
+      $src_zone_file = "db.example1.gov.br"
     }
     'example2.gov.br' : {
-      $zone_puppet_files = "named/db.example2.gov.br"
+      $src_zone_file = "db.example2.gov.br"
     }
   }
 
@@ -20,9 +30,11 @@ define named::zone ($server_type, $domain, $zone_file)
   # cria/atualiza arquivo
   file { $zone_file:
     path    => "$zone_file",
-    content => files($zone_puppet_files),
-    require => Package['named'],
+    source  => ["puppet:///modules/named/$src_zone_file"],
     notify  => Service['named'],
+    owner   => 'root',
+    group   => 'named',
+    mode    => 0640,
   }
 
 
