@@ -40,3 +40,6 @@ NOTE: The DNS module uses concat and stdlib modules. It will be installed on the
 
 See project at https://forge.puppetlabs.com/theforeman/dns
 
+###Module: Tests
+
+This module is only to tests syntax and isolated tests of puppet lang. ;)

@@ -44,13 +44,13 @@ class tests {
 #}
 
 ## Slice
-$a.slice(2) |$entry|          { notice "first ${$entry[0]}, second ${$entry[1]}" }
-$a.slice(2) |$first, $second| { notice "first ${first}, second ${second}" }
+#$a.slice(2) |$entry|          { notice "first ${$entry[0]}, second ${$entry[1]}" }
+#$a.slice(2) |$first, $second| { notice "first ${first}, second ${second}" }
 
-#slice([1,2,3,4,5,6], 2) # produces [[1,2], [3,4], [5,6]]
-#slice(Integer[1,6], 2)  # produces [[1,2], [3,4], [5,6]]
-#slice(4,2)              # produces [[0,1], [2,3]]
-#slice('hello',2)        # produces [[h, e], [l, l], [o]]
+slice([1,2,3,4,5,6], 2) # produces [[1,2], [3,4], [5,6]]
+slice(Integer[1,6], 2)  # produces [[1,2], [3,4], [5,6]]
+slice(4,2)              # produces [[0,1], [2,3]]
+slice('hello',2)        # produces [[h, e], [l, l], [o]]
 
 
 
