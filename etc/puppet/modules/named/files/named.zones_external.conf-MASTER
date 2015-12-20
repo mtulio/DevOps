@@ -1,0 +1,12 @@
+
+# Zones of View "network_external" [MASTER]
+
+zone "example1.gov.br" IN {
+  type master;
+  file "master/db_ext-example1.gov.br"
+  allow-transfer {
+    a_ip_int_slaves
+  };
+  zone-statistics yes;
+  notify yes;
+};

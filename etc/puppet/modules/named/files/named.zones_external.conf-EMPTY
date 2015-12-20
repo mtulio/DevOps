@@ -1,0 +1,8 @@
+
+# Zones of View "network_external" [EMPTY]
+
+# en: No one zones was defined to be configured.
+# See puppet named module to create a right view for u.
+
+# pt: Nenhuma zona foi configurada.
+# Caso queira configurar, verifique as configurações do modulo no puppet
