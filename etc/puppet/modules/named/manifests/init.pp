@@ -5,7 +5,8 @@ class named (
   $config_file    = $named::params::config_file,
   $config_zone    = $named::params::config_zone,
   $dir_zone       = $named::params::dir_zone,
-  $dir_log        = $named::params::dir_log
+  $dir_log        = $named::params::dir_log,
+  $ip_addr        = $named::params::ip_addr
 
 ) inherits named::params {
 
