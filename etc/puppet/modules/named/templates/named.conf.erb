@@ -29,6 +29,7 @@ options {
 	   attacks. Implementing BCP38 within your network would greatly
 	   reduce such attack surface 
 	*/
+	# Recursion will be override in external view
 	recursion yes;
 
 	dnssec-enable yes;
@@ -43,6 +44,11 @@ options {
 	session-keyfile "/run/named/session.key";
 };
 
+#############################################
+#
+# Logging management / Gerenciamento de logs
+#
+
 logging {
         channel default_debug {
                 file "data/named.run";
@@ -50,14 +56,11 @@ logging {
         };
 };
 
-zone "." IN {
-	type hint;
-	file "named.ca";
-};
-
-include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";
 
-# Including Zones
+#############################################
+#
+# Zones management / Gerenciamento de zonas
+# 
 include "/etc/named.zones.conf";
 

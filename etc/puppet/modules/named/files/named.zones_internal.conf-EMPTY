@@ -1,3 +1,14 @@
 
 # Zones of View "network_internal" [EMPTY]
 
+###### DEFAULT zones 
+## When using views, all zones might to be 
+##  assigned to one visualization context.
+
+zone "." IN {
+        type hint;
+        file "named.ca";
+};
+
+include "/etc/named.rfc1912.zones";
+

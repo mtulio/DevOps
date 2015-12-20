@@ -3,14 +3,14 @@ define named::zone ($domain, $zone_dir, $zone_file)
 
   # en: Create a dir from destination zone
   # pt: Cria o sub-diretporio da zona 
-  file { $zone_dir :
-    ensure  => directory,
-    recurse => true,
-    #create_parents => true,
-    owner   => 'root',
-    group   => 'named',
-    mode    => 0750,
-  }
+#  file { $zone_dir :
+#    ensure  => directory,
+#    recurse => true,
+#    #create_parents => true,
+#    owner   => 'root',
+#    group   => 'named',
+#    mode    => 0750,
+#  }
 
   # en: Mapping master's zone file
   # pt: Mapeia os arquivos de zona no master

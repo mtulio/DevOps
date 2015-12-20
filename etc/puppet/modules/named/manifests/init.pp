@@ -15,19 +15,13 @@ class named (
   include named::package
   include named::service
 
-  # Cria os diretórios
-  ## Criado automaticamente pelo pacote bind-chroot
-  #file { $dir_log:
-  #  ensure => directory,
-  #  recurse=> true,
-  #}
-
+  # en: Check each hostname and apply its profile
   case $::hostname {
     'pmaster' : {
       $server_type = "master"
       $dir_zone_m = "${dir_zone}/${server_type}"
 
-      # Config server
+      # en: Config server
       named::config {$::hostname:
         type   => $server_type,
         view   => "all",		# all(internal+external), internal, external
@@ -35,15 +29,22 @@ class named (
 
       # Create each domain
       $domain = "example1.gov.br"
-      #$domains = ["example1.gov.br", "example2.gov.br"]
-
+      $domains = ["example1.gov.br", "example2.gov.br"]
+ 
       #$domains.each |$domain| {
-        named::zone { $domain:
+        # external zone
+        named::zone { "EXT-$domain" :
+        #named::zone { $domains :
           domain    => $domain,
           zone_dir  => "${dir_zone_m}",
-          #zone_file => "$dir_zone_m/db.${domain}",
           zone_file => "db_ext-${domain}",
         }
+        named::zone { "INT-$domain":
+          domain    => $domain,
+          zone_dir  => "${dir_zone_m}",
+          zone_file => "db_int-${domain}",
+        }
+        # internal zone
       #}
     } # finish server rhensprd01
   }
