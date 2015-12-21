@@ -79,21 +79,21 @@ define named::config (
   ## ... Creating files
   file { "${root_jail}etc/named.zones_internal.conf" :
     path   => "${root_jail}etc/named.zones_internal.conf",
-    source => ["puppet:///modules/named/$cfg_zone_internal"],
+    source => ["puppet:///modules/named/conf/$cfg_zone_internal"],
     notify => Service['named'],
   }
   file { "/etc/named.zones_internal.conf" : ensure => 'link', target => "${root_jail}etc/named.zones_internal.conf", }
   
   file { "${root_jail}etc/named.zones_external.conf" :
     path   => "${root_jail}etc/named.zones_external.conf",
-    source => ["puppet:///modules/named/$cfg_zone_external"],
+    source => ["puppet:///modules/named/conf/$cfg_zone_external"],
     notify => Service['named'],
   }
   file { "/etc/named.zones_external.conf" : ensure => 'link', target => "${root_jail}etc/named.zones_external.conf", }
   
   file { "${root_jail}etc/named.rfc1912.zones" :
     path   => "${root_jail}etc/named.rfc1912.zones",
-    source => ["puppet:///modules/named/default/named.rfc1912.zones"],
+    source => ["puppet:///modules/named/conf/default/named.rfc1912.zones"],
     notify => Service['named'],
   }
   file { "/etc/named.rfc1912.zones" : ensure => 'link', target => "${root_jail}etc/named.rfc1912.zones", }
