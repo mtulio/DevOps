@@ -4,6 +4,10 @@
 
 1. [Overview](#overview)
 2. [Modules](#modules)
+*  [Modules - motd](#modules-motd)
+*  [Modules - apache](#modules-apache)
+*  [Modules - named](#modules-named)
+*  [Modules - nginx](#modules-nginx)
 
 ##Overview
 
@@ -23,6 +27,12 @@ Module 'hello world' , is a first module to set system banner.
 [in development]
 
 This is a DNS module to use jail server [chroot] in Red Hat-based. That module was wrote by me and is in constantly improvment.
+
+
+###Module: Nginx
+[in development]
+
+Module to install and configure reverse proxy using the fatest web proxy, NGINX.
 
 
 ###Module: DNSnet
