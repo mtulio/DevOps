@@ -29,23 +29,31 @@ class named (
 
       # Create each domain
       $domain = "example1.gov.br"
-      $domains = ["example1.gov.br", "example2.gov.br"]
  
-      #$domains.each |$domain| {
-        # external zone
-        named::zone { "EXT-$domain" :
-        #named::zone { $domains :
-          domain    => $domain,
-          zone_dir  => "${dir_zone_m}",
-          zone_file => "db_ext-${domain}",
-        }
-        named::zone { "INT-$domain":
-          domain    => $domain,
-          zone_dir  => "${dir_zone_m}",
-          zone_file => "db_int-${domain}",
-        }
-        # internal zone
-      #}
+      # TODO: create a loop and add all domains
+      #$domains = ["example1.gov.br", "ict-eng.net"]
+
+      #zzone external : example1.gov.br
+      named::zone { "EXT-$domain" :
+        domain    => $domain,
+        zone_dir  => "${dir_zone_m}",
+        zone_file => "db_ext-${domain}",
+      }
+        
+      #zone internal : example1.gov.br
+      named::zone { "INT-$domain":
+        domain    => $domain,
+        zone_dir  => "${dir_zone_m}",
+        zone_file => "db_int-${domain}",
+      }
+
+      #zone external: ict-eng.net
+      named::zone { "ict-eng.net":
+        domain    => "ict-eng.net",
+        zone_dir  => "${dir_zone_m}",
+        zone_file => "db_ext-ict-eng.net",
+      }
+
     } # finish server rhensprd01
   }
 }
