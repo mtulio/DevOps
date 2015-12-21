@@ -13,7 +13,7 @@ options {
 		<%= @ipaddress -%>; 
 	};
 	listen-on-v6 port 53 { ::1; };
-	directory 	"/var/named";
+	directory 	"/var/named/chroot/var/named";
 	dump-file 	"/var/named/data/cache_dump.db";
 	statistics-file "/var/named/data/named_stats.txt";
 	memstatistics-file "/var/named/data/named_mem_stats.txt";

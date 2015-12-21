@@ -1,10 +1,13 @@
 $TTL 1D
 @	IN SOA	example1.gov.br. admin.example1.gov.br. (
-					0	; serial
+					1	; serial
 					1D	; refresh
 					1H	; retry
 					1W	; expire
 					3H )	; minimum
-	NS	@
+	NS	ns1.example1.gov.br.
 	A	200.200.200.1
 	AAAA	::1
+
+ns1.example1.gov.br.	IN A	200.200.200.1
+ns2.example1.gov.br.	IN A	200.200.200.2

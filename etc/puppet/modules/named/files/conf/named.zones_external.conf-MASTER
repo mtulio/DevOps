@@ -11,12 +11,12 @@ zone "example1.gov.br" IN {
   notify yes;
 };
 
-zone "example2.gov.br" IN {
-  type master;
-  file "master/db_ext-example2.gov.br";
-  allow-transfer {
-    a_ip_int_slaves;
-  };
-  zone-statistics yes;
-  notify yes;
-};
+#zone "example2.gov.br" IN {
+#  type master;
+#  file "master/db_ext-example2.gov.br";
+#  allow-transfer {
+#    a_ip_int_slaves;
+#  };
+#  zone-statistics yes;
+#  notify yes;
+#};

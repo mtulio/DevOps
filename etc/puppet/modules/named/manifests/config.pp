@@ -7,36 +7,46 @@ define named::config (
   $dir_zone     = $named::params::dir_zone
 ) {
 
+  # Set globals permissions
+  File {
+    owner => 'root',
+    group => 'named',
+    mode  => '0640',
+  }
+
   # Main config file
   file { $config_file :
     path   => "$config_file",
     content=> template('named/named.conf.erb'),
-    owner  => 'root',
-    group  => 'named',
-    mode   => 0640,
+    #owner  => 'root',
+    #group  => 'named',
+    #mode   => 0640,
     notify => Service['named'],
-    require => Package['bind'],
+    require => Package['bind', 'bind-chroot'],
   }
+  file { "/etc/named.conf" : ensure => 'link', target => "$config_file", }
 
   # Zones - Main zone config file
   file { $config_zone :
     path   => "$config_zone",
-    source => ["puppet:///modules/named/named.zones.conf"],
-    owner  => 'root',
-    group  => 'named',
-    mode   => 0640,
+    source => ["puppet:///modules/named/conf/named.zones.conf"],
+    #owner  => 'root',
+    #group  => 'named',
+    #mode   => 0640,
     notify => Service['named'],
   }
+  file { "/etc/named.zones.conf" : ensure => 'link', target => "$config_zone", }
 
   # Zones - ACL config files
   file { "${root_jail}etc/named.zones_acl.conf" :
     path   => "${root_jail}etc/named.zones_acl.conf",
-    source => ["puppet:///modules/named/named.zones_acl.conf"],
-    owner  => 'root',
-    group  => 'named',
-    mode   => 0640,
+    source => ["puppet:///modules/named/conf/named.zones_acl.conf"],
+    #owner  => 'root',
+    #group  => 'named',
+    #mode   => 0640,
     notify => Service['named'],
   }
+  file { "/etc/named.zones_acl.conf" : ensure => 'link', target => "${root_jail}etc/named.zones_acl.conf", }
   
   # Zones - Views configs files
 
@@ -70,20 +80,23 @@ define named::config (
   file { "${root_jail}etc/named.zones_internal.conf" :
     path   => "${root_jail}etc/named.zones_internal.conf",
     source => ["puppet:///modules/named/$cfg_zone_internal"],
-    owner  => 'root',
-    group  => 'named',
-    mode   => 0640,
     notify => Service['named'],
   }
+  file { "/etc/named.zones_internal.conf" : ensure => 'link', target => "${root_jail}etc/named.zones_internal.conf", }
   
   file { "${root_jail}etc/named.zones_external.conf" :
     path   => "${root_jail}etc/named.zones_external.conf",
     source => ["puppet:///modules/named/$cfg_zone_external"],
-    owner  => 'root',
-    group  => 'named',
-    mode   => 0640,
     notify => Service['named'],
   }
+  file { "/etc/named.zones_external.conf" : ensure => 'link', target => "${root_jail}etc/named.zones_external.conf", }
+  
+  file { "${root_jail}etc/named.rfc1912.zones" :
+    path   => "${root_jail}etc/named.rfc1912.zones",
+    source => ["puppet:///modules/named/default/named.rfc1912.zones"],
+    notify => Service['named'],
+  }
+  file { "/etc/named.rfc1912.zones" : ensure => 'link', target => "${root_jail}etc/named.rfc1912.zones", }
 
 
   # Creating directories of zones
@@ -92,16 +105,40 @@ define named::config (
   file { "${dir_zone}/master" :
     ensure  => directory,
     recurse => true,
-    owner   => 'root',
-    group   => 'named',
     mode    => 0750,
   }
   file { "${dir_zone}/slaves" :
     ensure  => directory,
     recurse => true,
-    owner   => 'root',
-    group   => 'named',
     mode    => 0750,
+  }
+  file { "${dir_zone}/data" :
+    ensure  => directory,
+    owner   => 'named',
+    recurse => true,
+    mode    => 0750,
+  }
+
+  # Copying default zones
+  file { "${dir_zone}/named.loopback" :
+    path => "${dir_zone}/named.loopback",
+    source => ["puppet:///modules/named/zones/default/named.loopback"],
+    notify => Service['named'],
+  }
+  file { "${dir_zone}/named.localhoost" :
+    path => "${dir_zone}/named.localhost",
+    source => ["puppet:///modules/named/zones/default/named.localhost"],
+    notify => Service['named'],
+  }
+  file { "${dir_zone}/named.empty" :
+    path => "${dir_zone}/named.empty",
+    source => ["puppet:///modules/named/zones/default/named.empty"],
+    notify => Service['named'],
+  }
+  file { "${dir_zone}/named.ca" :
+    path => "${dir_zone}/named.ca",
+    source => ["puppet:///modules/named/zones/default/named.ca"],
+    notify => Service['named'],
   }
 
 }
