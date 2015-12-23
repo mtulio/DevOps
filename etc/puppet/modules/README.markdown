@@ -2,8 +2,8 @@
 
 ####Table of Contents
 
-1. [Overview](#overview)
-2. [Modules](#modules)
+[Overview](#overview)
+[Modules](#modules)
 *  [Modules - motd](#modules-motd)
 *  [Modules - apache](#modules-apache)
 *  [Modules - named](#modules-named)
