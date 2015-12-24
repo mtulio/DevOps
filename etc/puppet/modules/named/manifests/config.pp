@@ -15,137 +15,87 @@ define named::config (
     mode  => '0640',
   }
 
-  # Main config file
+  # Main config file [/etc/named.conf]
   file { $config_file :
-    path   => "$config_file",
-    content=> template('named/named.conf.erb'),
-    notify => Service['named'],
+    path    => "$config_file",
+    content => template('named/named.conf.erb'),
+    #source   => ["puppet:///modules/named/pool_${pool}/${type}/etc/named.conf"],
+    #notify  => Service['named'],
     require => Package['bind', 'bind-chroot'],
   }
   file { "/etc/named.conf" : ensure => 'link', target => "$config_file", }
-
-  # Zones - Main zone config file
-  file { $config_zone :
-    path   => "$config_zone",
-    source => ["puppet:///modules/named/pool_${pool}/conf/named.zones.conf"],
-    before => File [$config_file],
-    notify => Service['named'],
+ 
+  # Sync directory confs [/etc/named] & Create a link to root jail
+  file {'DirConfSync':
+    ensure   => 'directory',
+    recurse  => 'true',
+    purge    => 'true',
+    mode     => 0650,
+    name     => "${root_jail}/etc/named",
+    source   => ["puppet:///modules/named/pool_${pool}/etc/named/"],
+    require  => Package['bind', 'bind-chroot'],
+    before   => File["${config_file}"],
   }
-  file { "/etc/named.zones.conf" : ensure => 'link', target => "$config_zone", }
-
-  # Zones - ACL config files
-  file { "${root_jail}etc/named.zones_acl.conf" :
-    path   => "${root_jail}etc/named.zones_acl.conf",
-    source => ["puppet:///modules/named/pool_${pool}/conf/named.zones_acl.conf"],
-    before => File [$config_file],
-    notify => Service['named'],
+  # Update zones.conf from master/slave
+  file { 'DirConfSyncZones' :
+    path    => "${root_jail}/etc/named/zones.conf",
+    source  => ["puppet:///modules/named/pool_${pool}/${type}/etc/named/zones.conf"],
+    require => File['DirConfSync'],
   }
-  file { "/etc/named.zones_acl.conf" : ensure => 'link', target => "${root_jail}etc/named.zones_acl.conf", }
-  
-  # Zones - Views configs files
-
-  ## ... Determing name of files
-  case $view {
-    'all' : {
-      case $type {
-       'master' : {
-          $cfg_zone_internal = "named.zones_internal.conf-MASTER"
-          $cfg_zone_external = "named.zones_external.conf-MASTER"
-        } # master
-       'slave' : {
-          $cfg_zone_internal = "named.zones_internal.conf-SLAVE"
-          $cfg_zone_external = "named.zones_external.conf-SLAVE"
-        } # slave
-        default : { 
-	  notice ("named: TYPE[$type] not found. Using empty files named.zones_internal.conf-EMPTY") 
-          $cfg_zone_internal = "named.zones_internal.conf-EMPTY"
-          $cfg_zone_external = "named.zones_external.conf-EMPTY"
-        }
-      } # type
-    } # all
-    default : {
-	  notice ("named: VIEW[$view]  not found. Using empty files named.zones_{external,internal}.conf-EMPTY")
-          $cfg_zone_internal = "named.zones_internal.conf-EMPTY"
-          $cfg_zone_external = "named.zones_external.conf-EMPTY"
-    }
-  } # views
-
-  ## ... Creating files
-  file { "${root_jail}etc/named.zones_internal.conf" :
-    path   => "${root_jail}etc/named.zones_internal.conf",
-    source => ["puppet:///modules/named/pool_${pool}/conf/$cfg_zone_internal"],
-    before => File [$config_file],
-    notify => Service['named'],
+  # Create syn links to config:acl.conf  key.conf  logging.conf  zones.conf
+  file { 'DirConfLinkAcl' : 
+    path    => '/etc/named/acl.conf', 
+    ensure  => 'link', 
+    target  => "${root_jail}etc/named/acl.conf",
+    require => File['DirConfSync'],
   }
-  file { "/etc/named.zones_internal.conf" : ensure => 'link', target => "${root_jail}etc/named.zones_internal.conf", }
-  
-  file { "${root_jail}etc/named.zones_external.conf" :
-    path   => "${root_jail}etc/named.zones_external.conf",
-    source => ["puppet:///modules/named/pool_${pool}/conf/$cfg_zone_external"],
-    before => File [$config_file],
-    notify => Service['named'],
+  file { "DirConfLinkKey" : 
+    path   => '/etc/named/key.conf', 
+    ensure => 'link', 
+    target => "${root_jail}etc/named/key.conf",
+    require=> File['DirConfSync'],
   }
-  file { "/etc/named.zones_external.conf" : ensure => 'link', target => "${root_jail}etc/named.zones_external.conf", }
-  
-  file { "${root_jail}etc/named.rfc1912.zones" :
-    path   => "${root_jail}etc/named.rfc1912.zones",
-    source => ["puppet:///modules/named/pool_${pool}/conf/default/named.rfc1912.zones"],
-    before => File [$config_file],
-    notify => Service['named'],
+  file { "DirConfLinkLog" : 
+    path   => '/etc/named/logging.conf', 
+    ensure => 'link', 
+    target => "${root_jail}etc/named/logging.conf",
+    require=> File['DirConfSync'],
   }
-  file { "/etc/named.rfc1912.zones" : ensure => 'link', target => "${root_jail}etc/named.rfc1912.zones", }
-
-
-  # Creating directories of zones
-  # en: Create a dir from destination zone
-  # pt: Cria o sub-diretporio da zona 
-  file { "${dir_zone}/master" :
-    ensure  => directory,
-    recurse => true,
-    mode    => 0750,
-  }
-  file { "${dir_zone}/slaves" :
-    ensure  => directory,
-    recurse => true,
-    mode    => 0750,
-  }
-  file { "${dir_zone}/data" :
-    ensure  => directory,
-    owner   => 'named',
-    recurse => true,
-    mode    => 0750,
+  file { "DirConfLinkZones" : 
+    path   => '/etc/named/zones.conf', 
+    ensure => 'link', 
+    target => "${root_jail}etc/named/zones.conf",
+    require=> File['DirConfSyncZones'],
   }
 
-  # Copying default zones
-  file { "${dir_zone}/named.loopback" :
-    path => "${dir_zone}/named.loopback",
-    source => ["puppet:///modules/named/pool_${pool}/zones/default/named.loopback"],
-    before => File [$config_file],
-    notify => Service['named'],
+  # Sync directory conf.d/
+  file {'SyncDirZones':
+    ensure   => 'directory',
+    recurse  => 'true',
+    purge    => 'true',
+    #mode     => 0750,
+    name     => "${dir_zone}",
+    source   => ["puppet:///modules/named/pool_${pool}/${type}/zones/"],
+    before   => File["${config_file}"],
+    require  => Package['bind', 'bind-chroot'],
   }
-  file { "${dir_zone}/named.localhoost" :
-    path => "${dir_zone}/named.localhost",
-    source => ["puppet:///modules/named/pool_${pool}/zones/default/named.localhost"],
-    before => File [$config_file],
-    notify => Service['named'],
+  # Sync directory conf.d/
+  file {'SyncDirZonesDefault':
+    ensure   => 'directory',
+    recurse  => 'true',
+    purge    => 'true',
+    #mode     => 0750,
+    name     => "${dir_zone}/default/",
+    source   => ["puppet:///modules/named/pool_default/zones/default"],
+    before   => File["${config_file}"],
+    require  => File['SyncDirZones'],
   }
-  file { "${dir_zone}/named.empty" :
-    path => "${dir_zone}/named.empty",
-    source => ["puppet:///modules/named/pool_${pool}/zones/default/named.empty"],
-    before => File [$config_file],
-    notify => Service['named'],
-  }
-  file { "${dir_zone}/named.ca" :
-    path => "${dir_zone}/named.ca",
-    source => ["puppet:///modules/named/pool_${pool}/zones/default/named.ca"],
-    before => File [$config_file],
-    notify => Service['named'],
-  }
-
-  # Copying scripts
-  file { "${dir_zone}/master/script_sign_zone.sh" :
-    path => "${dir_zone}/master/script_sign_zone.sh",
-    source => ["puppet:///modules/named/pool_${pool}/zones/script_sign_zone.sh"],
-  }
+  #file {'ScriptSignZone':
+  #  path    => "${dirzone}/master/sign_zone_dnssec.sh",
+  #  owner   => root,
+  #  group   => root,
+  #  mode    => 0755,
+  #  require => File['SyncDirZones'],
+  #}
 
 }

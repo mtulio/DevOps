@@ -13,14 +13,32 @@ class named (
 
 ) inherits named::params {
 
-
   # Instala e inicia o serviço
   include named::package
   include named::service
   include named::exec
 
+  #TODO: create install or call require to install package before config
+
   # en: Check each hostname and apply its profile
   case $::hostname {
+    'rhclitst01' : {
+      $server_type = "master"
+      $dir_zone_m = "${dir_zone}/${server_type}"
+      $pool = "dmz"
+      
+      # Config server and sync data
+      named::config { $::hostname:
+        type   => $server_type,
+        view   => "external",     # not used
+        pool   => $pool,
+      }
+    
+      # Sign zone
+      # manifests/dnssec.pp
+
+      notice("# Todos os dados foram sincronizados do servidor MASTER")
+    }
     'pmaster' : {
       $server_type = "master"
       $pool = "dmz"
@@ -61,7 +79,24 @@ class named (
         zone_dir  => "${dir_zone_m}",
         zone_file => "db-ict-eng.net",
       }
+    } # finish server 
+    case default : {
+      $server_type = "master"
+      $dir_zone_m = "${dir_zone}/${server_type}"
+      $pool = "default"
+      
+      # Config server and sync data
+      named::config { $::hostname:
+        type   => $server_type,
+        view   => "external",     # not used
+        pool   => $pool,
+      }
+    
+      # Sign zone
+      # manifests/dnssec.pp
 
-    } # finish server rhensprd01
+      notice("# Data was sync with MASTER")
+    
+    }
   }
 }
