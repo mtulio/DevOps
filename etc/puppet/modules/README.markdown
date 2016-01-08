@@ -34,6 +34,16 @@ This is a DNS module to use jail server [chroot] in Red Hat-based. That module w
 
 Module to install and configure reverse proxy using the fatest web proxy, NGINX.
 
+###Module: DNSsec
+[in development]
+
+Module to install DNS with jail (chroot) and sigining zones placed on dir /var/named/chroot/var/named/master/2.zones.
+
+This modules depends of Firewall module, install it as a follow:
+
+ ~~~
+ puppet module install puppetlabs-firewall
+ ~~~
 
 ###Module: DNSnet
 
@@ -44,6 +54,7 @@ Installing steps:
 
  ~~~
  puppet module install theforeman-dns 
+ puppet module install puppetlabs-firewall
  ~~~
 
 NOTE: The DNS module uses concat and stdlib modules. It will be installed on the first usage/apply.
