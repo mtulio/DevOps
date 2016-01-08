@@ -5,7 +5,7 @@ class named::exec (
   exec { "sign_all" :
     command     => "${dir_zone}/master/atualiza_dnssec.sh",
     refreshonly => true,
-    require     => Package['bind','bind-chroot']
+    require     => File['ScriptSignZone']
   }
 
   #exec { "sign_ict-eng.net" :

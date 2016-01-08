@@ -1,5 +1,5 @@
 
-# Class created by Marco Tulio <git@mtulio.eng.br>
+# Class created by Marco Tulio <https://github.com/mtulio/DevOps/tree/master/etc/puppet/modules>
 
 class named (
   $package_name   = $named::params::package_name,
@@ -20,30 +20,17 @@ class named (
 
   # en: Check each hostname and apply its profile
   case $::hostname {
-    'rhclitst01' : {
+    /(clitst01|dnseprd01|dnseprd02|dnseprd03|dnseprd04)/: {
       $server_type = "master"
       $dir_zone_m  = "${dir_zone}/${server_type}"
       $pool        = "dmz"
       $dnssec      = "yes"
       
       # Config server and sync data
-      named::config { $::hostname:
-        type   => $server_type,
-        view   => "external",     # not used
-        pool   => $pool,
-      }
-
-      notice("# Todos os dados foram sincronizados do servidor MASTER")
-    }
-    'pmaster' : {
-      $server_type = "master"
-      $pool = "dmz"
-      $dir_zone_m = "${dir_zone}/${server_type}"
-      $dnssec = "yes"
-
       named::zonesync { $::hostname:
         type   => $server_type,
 	pool   => $pool,
+        dnssec => $dnssec,
       }
 
       # en: Config server
@@ -53,28 +40,55 @@ class named (
         dnssec => $dnssec,
       }
 
-      # Create each domain
-      #$domain = "example.gov.br"
- 
-      # TODO: create a loop and add all domains
-      #$domains = ["example1.gov.br", "ict-eng.net"]
+      notice("# Todos os dados foram sincronizados do servidor MASTER")
+    }
+    'pmaster' : {
+      $server_type = "master"
+      $pool = "example"
+      $dir_zone_m = "${dir_zone}/${server_type}"
+      $dnssec = "yes"
 
-      #zzone external : example1.gov.br
-      #named::zone { "EXT-$domain" :
-      #  pool      => $pool,
-      #  domain    => $domain,
-      #  zone_dir  => "${dir_zone_m}",
-      #  zone_file => "db-${domain}",
-      #}
-        
-      #zone external: ict-eng.net
-      #named::zone { "ict-eng.net":
-      #  pool      => $pool,
-      #  domain    => "ict-eng.net",
-      #  zone_dir  => "${dir_zone_m}",
-      #  zone_file => "db-ict-eng.net",
-      #}
+      named::zonesync { $::hostname:
+        type   => $server_type,
+	pool   => $pool,
+        dnssec => $dnssec,
+      }
+
+      # en: Config server
+      named::config { $::hostname:
+        type   => $server_type,
+	pool   => $pool,
+        dnssec => $dnssec,
+      }
 
     } # finish server rhensprd01
+  } # finish case
+
+  # Setup firewall rules
+  if $::osfamily == "redhat" and $::operatingsystemmajrelease == 7 {
+    ensure_packages("iptables-services",{'ensure' => "latest"})
+    Package["iptables-services"] -> Firewall <| |>
+    service { "firewalld": 
+      enable => false,
+    }
+ 
+    service { "iptables":
+      enable => true,
+    }
+  } 
+
+  firewall { '000 accept TCP DNS queries ':
+    iniface  => 'eth0',
+    proto    => 'tcp',
+    port     => '53',
+    state    => ['RELATED', 'ESTABLISHED'],
+    action   => 'accept',
   }
+  firewall { '000 accept UDP DNS queries ':
+    iniface  => 'eth0',
+    proto    => 'udp',
+    port     => '53',
+    action   => 'accept',
+  }
+
 }

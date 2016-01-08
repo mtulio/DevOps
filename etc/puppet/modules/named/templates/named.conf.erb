@@ -1,3 +1,15 @@
+
+#
+# DNS - Arquivo de configuração do servidor BIND (DNS)
+# ATENÇÂO: Arquivo atualizado automáticamente pelo PUPPET server.
+#
+
+#
+# Named configurations : Main config file
+# '-> Arquivo de configuração principal do DNS
+#
+
+
 //
 // named.conf
 //
@@ -8,16 +20,24 @@
 //
 
 options {
+
+        version  "Windows DNS 5.1";
+
 	listen-on port 53 { 
 		127.0.0.1;
 		<%= @ipaddress -%>; 
 	};
 	listen-on-v6 port 53 { ::1; };
+
 	directory 	"/var/named/chroot/var/named";
 	dump-file 	"/var/named/data/cache_dump.db";
 	statistics-file "/var/named/data/named_stats.txt";
 	memstatistics-file "/var/named/data/named_mem_stats.txt";
-	allow-query     { localhost; };
+
+        # Global query restrictions
+	allow-query             { any; };
+        clients-per-query       0;
+        max-clients-per-query   0;
 
 	/* 
 	 - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
@@ -30,8 +50,9 @@ options {
 	   reduce such attack surface 
 	*/
 	# Recursion will be override in external view
-	recursion yes;
+	recursion no;
 
+        # Enable DNSSec
 	dnssec-enable yes;
 	dnssec-validation yes;
 
@@ -46,21 +67,37 @@ options {
 
 #############################################
 #
+# ACL management / Definição de Listas de controle 
+#  de acesso
+#
+
+include "/etc/named/acl.conf";
+
+#############################################
+#
 # Logging management / Gerenciamento de logs
 #
 
-logging {
-        channel default_debug {
-                file "data/named.run";
-                severity dynamic;
-        };
-};
+#logging {
+#        channel default_debug {
+#                file "data/named.run";
+#                severity dynamic;
+#        };
+#};
 
-include "/etc/named/named.root.key";
+include "/etc/named/logging.conf";
+
+#############################################
+#
+# Keys management / Gerenciamento de chaves RNDC
+# 
+
+#include "/etc/named/named.root.key";
+include "/etc/named/key.conf";
 
 #############################################
 #
 # Zones management / Gerenciamento de zonas
 # 
-include "/etc/named/named.zones.conf";
+include "/etc/named/zones.conf";
 

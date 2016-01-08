@@ -18,8 +18,8 @@ define named::config (
   # Main config file [/etc/named.conf]
   file { $config_file :
     path    => "$config_file",
-    #content => template('named/named.conf.erb'),
-    source   => ["puppet:///modules/named/pool_${pool}/${type}/etc/named.conf"],
+    content => template('named/named.conf.erb'),
+    #source   => ["puppet:///modules/named/pool_${pool}/${type}/etc/named.conf"],
     notify  => Service['named'],
     require => Package['bind', 'bind-chroot'],
   }
@@ -63,19 +63,19 @@ define named::config (
     require=> File['DirConfSync'],
   }
 
-  case $dnssec {
-    'yes' : {
-      file {'ScriptSignZone':
-        path    => "${dir_zone}/master/atualiza_dnssec.sh",
-        owner   => root,
-        group   => root,
-        mode    => 0755,
-        source   => ["puppet:///modules/named/pool_${pool}/${type}/zones/master/atualiza_dnssec.sh"],
-        #require => File[$config_file],
-        before   => File["${config_file}"],
-        require  => File['SyncDirZones'],
-        notify   => Exec['sign_all'],
-      }
-    }
-  }
+#  case $dnssec {
+#    'yes' : {
+#      file {'ScriptSignZone':
+#        path    => "${dir_zone}/master/atualiza_dnssec.sh",
+#        owner   => root,
+#        group   => root,
+#        mode    => 0755,
+#        source   => ["puppet:///modules/named/pool_${pool}/${type}/zones/master/atualiza_dnssec.sh"],
+#        #require => File[$config_file],
+#        before   => File["${config_file}"],
+#        require  => File['SyncDirZones'],
+#        notify   => Exec['sign_all'],
+#      }
+#    }
+#  }
 }
