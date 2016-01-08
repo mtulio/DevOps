@@ -36,7 +36,7 @@ options {
 	dnssec-validation yes;
 
 	/* Path to ISC DLV key */
-	bindkeys-file "/etc/named.iscdlv.key";
+	bindkeys-file "/etc/named/named.iscdlv.key";
 
 	managed-keys-directory "/var/named/dynamic";
 
@@ -56,11 +56,11 @@ logging {
         };
 };
 
-include "/etc/named.root.key";
+include "/etc/named/named.root.key";
 
 #############################################
 #
 # Zones management / Gerenciamento de zonas
 # 
-include "/etc/named.zones.conf";
+include "/etc/named/named.zones.conf";
 

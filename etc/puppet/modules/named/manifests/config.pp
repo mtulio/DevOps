@@ -1,7 +1,7 @@
 define named::config (
   $type, 
-  $view,
   $pool,
+  $dnssec,
   $root_jail    = $named::params::root_jail,
   $config_file  = $named::params::config_file,
   $config_zone  = $named::params::config_zone,
@@ -18,9 +18,9 @@ define named::config (
   # Main config file [/etc/named.conf]
   file { $config_file :
     path    => "$config_file",
-    content => template('named/named.conf.erb'),
-    #source   => ["puppet:///modules/named/pool_${pool}/${type}/etc/named.conf"],
-    #notify  => Service['named'],
+    #content => template('named/named.conf.erb'),
+    source   => ["puppet:///modules/named/pool_${pool}/${type}/etc/named.conf"],
+    notify  => Service['named'],
     require => Package['bind', 'bind-chroot'],
   }
   file { "/etc/named.conf" : ensure => 'link', target => "$config_file", }
@@ -32,22 +32,17 @@ define named::config (
     purge    => 'true',
     mode     => 0650,
     name     => "${root_jail}/etc/named",
-    source   => ["puppet:///modules/named/pool_${pool}/etc/named/"],
+    source   => ["puppet:///modules/named/pool_${pool}/${type}/etc/named/"],
     require  => Package['bind', 'bind-chroot'],
     before   => File["${config_file}"],
-  }
-  # Update zones.conf from master/slave
-  file { 'DirConfSyncZones' :
-    path    => "${root_jail}/etc/named/zones.conf",
-    source  => ["puppet:///modules/named/pool_${pool}/${type}/etc/named/zones.conf"],
-    require => File['DirConfSync'],
+    #notify  => Service["nginx"],
   }
   # Create syn links to config:acl.conf  key.conf  logging.conf  zones.conf
-  file { 'DirConfLinkAcl' : 
-    path    => '/etc/named/acl.conf', 
-    ensure  => 'link', 
-    target  => "${root_jail}etc/named/acl.conf",
-    require => File['DirConfSync'],
+  file { "DirConfLinkAcl" : 
+    path   => '/etc/named/acl.conf', 
+    ensure => 'link', 
+    target => "${root_jail}etc/named/acl.conf",
+    require=> File['DirConfSync'],
   }
   file { "DirConfLinkKey" : 
     path   => '/etc/named/key.conf', 
@@ -65,37 +60,22 @@ define named::config (
     path   => '/etc/named/zones.conf', 
     ensure => 'link', 
     target => "${root_jail}etc/named/zones.conf",
-    require=> File['DirConfSyncZones'],
+    require=> File['DirConfSync'],
   }
 
-  # Sync directory conf.d/
-  file {'SyncDirZones':
-    ensure   => 'directory',
-    recurse  => 'true',
-    purge    => 'true',
-    #mode     => 0750,
-    name     => "${dir_zone}",
-    source   => ["puppet:///modules/named/pool_${pool}/${type}/zones/"],
-    before   => File["${config_file}"],
-    require  => Package['bind', 'bind-chroot'],
+  case $dnssec {
+    'yes' : {
+      file {'ScriptSignZone':
+        path    => "${dir_zone}/master/atualiza_dnssec.sh",
+        owner   => root,
+        group   => root,
+        mode    => 0755,
+        source   => ["puppet:///modules/named/pool_${pool}/${type}/zones/master/atualiza_dnssec.sh"],
+        #require => File[$config_file],
+        before   => File["${config_file}"],
+        require  => File['SyncDirZones'],
+        notify   => Exec['sign_all'],
+      }
+    }
   }
-  # Sync directory conf.d/
-  file {'SyncDirZonesDefault':
-    ensure   => 'directory',
-    recurse  => 'true',
-    purge    => 'true',
-    #mode     => 0750,
-    name     => "${dir_zone}/default/",
-    source   => ["puppet:///modules/named/pool_default/zones/default"],
-    before   => File["${config_file}"],
-    require  => File['SyncDirZones'],
-  }
-  #file {'ScriptSignZone':
-  #  path    => "${dirzone}/master/sign_zone_dnssec.sh",
-  #  owner   => root,
-  #  group   => root,
-  #  mode    => 0755,
-  #  require => File['SyncDirZones'],
-  #}
-
 }

@@ -23,39 +23,18 @@ master/
 '- script_resign_zone.sh
 
 
-## Pool of configurations
 
-### Default pool
+# POOL DMZ
 
-Default pool has default configuration of a server. If no host has defined on init.pp, the default configuration will apply. Basically these are:
-* Master zones
-* aaa
+Este pool manterá os registros DNS da INTERNET.
 
-This is the directory tree:
+Explicação dos diretórios:
+* master/ -> Mantém as configurações do DNS Master (Arquivos de configuração e zona DNS)
+* slave/  -> Mantém as configurações do DNS Slave (somente arquivo de configuração)
 
- ~~~
-files/pool_default/
-├── etc
-│   └── named
-│       ├── acl.conf
-│       ├── key.conf
-│       └── logging.conf
-├── master
-│   ├── etc
-│   │   └── named
-│   │       └── zones.conf
-│   └── zones
-│       └── script_sign_zone.sh
-├── slave
-│   └── etc
-│       └── named
-│           └── zones.conf
-└── zones
-    └── default
-        ├── named.ca
-        ├── named.empty
-        ├── named.localhost
-        └── named.loopback
 
- ~~~
+
+REFERNÊNCIAS:
+* [Assinando uma zona](https://www.digitalocean.com/community/tutorials/how-to-setup-dnssec-on-an-authoritative-bind-dns-server--2)
+
 
