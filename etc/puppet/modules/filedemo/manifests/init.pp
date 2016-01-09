@@ -1,4 +1,4 @@
-class filedemo {
+class filedemo ($content_file = $filedemo::params::content_file) inherits filedemo::params {
 
   File {
     owner => 'root',
@@ -22,6 +22,15 @@ class filedemo {
     owner   => admin,
     group   => root,
   }
+
+
+  # Testing class declaration and inheritance
+  ## Test1 - calling class without send arguments
+  #class { 'filedemo::newfile' : }
+
+  ## Test2 - calling class sending new argument
+  class { 'filedemo::newfile' : content_file => "New argument from init.pp - class declaration", }
+
 
 
 }
