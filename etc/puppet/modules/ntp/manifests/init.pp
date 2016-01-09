@@ -8,7 +8,8 @@ class ntp ($package) inherits ntp::params {
 #class ntp ($package = $ntp::params::package_name) inherits ntp::params {
 
   # Install NTP 
-  package { $package:
+  package { 'ntp' :
+    name   => $package,
     ensure => present,
   }
 
