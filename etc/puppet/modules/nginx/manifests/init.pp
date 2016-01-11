@@ -1,53 +1,73 @@
-class nginx {
+class nginx (
+  $service_name = 'nginx',
+  $package_name = 'nginx',
 
-  # include files
-  include nginx::package
-  include nginx::service
+  ### Custom ###
+  $repo_files     = undef,
+  $repo_templates = undef,
+  $reconfig       = 'no',
+  $ssl            = 'disabled',
+) {
 
-  # Config repo
-  # TODO: config suport for many distros, create templates, etc
-  case $::operatingsystem {
-    'CentOS' : {
-      $tpl_repo = "nginx.repo.centos"
-    }
-    'Redhat' : {
-      $tpl_repo = "nginx.repo.rhel"
-    }
-    default : {
-      fail(" # Error, OS does not support!")
-   }
+  # Class from /jfryman-nginx   
+  class { '::nginx::package':
+    package_name   => $package_name,
+    notify         => Class['::nginx::service'],
   }
 
-  file { '/etc/yum.repos.d/nginx.repo' :
-    path    => "/etc/yum.repos.d/nginx.repo",
-    source  => ["puppet:///modules/nginx/install/${tpl_repo}"],
-    #notify  => Service['nginx'],
-    #require => Package['nginx'],
-  } 
+  if $reconfig == 'yes' {
+    file { 'NginxSyncConfMain':
+      path    => "/etc/nginx/proxy.conf",
+      source  => ["puppet:///modules/${repo_files}/conf/proxy.conf"],
+      notify  => Service['nginx'],
+    }
+    file { 'NginxSyncConfProxy':
+      path    => "/etc/nginx/nginx.conf",
+      source  => ["puppet:///modules/${repo_files}/conf/nginx.conf"],
+      before  => File['NginxSyncConfMain'],
+      notify  => Service['nginx'],
+    }
+  } else {
+    file { 'NginxSyncConfMain':
+      path    => "/etc/nginx/proxy.conf",
+      require => Package['nginx'],
+    }
+    file { 'NginxSyncConfProxy':
+      path    => "/etc/nginx/nginx.conf",
+      before  => File['NginxSyncConfMain'],
+      notify  => Service['nginx'],
+    }
+  }    
 
+  if $repo_files {
+    # Sync directory conf.d/
+    file {'NginxSyncConfd':
+      ensure  => 'directory',
+      recurse => 'true',
+      purge   => 'true',
+      path    => '/etc/nginx/conf.d/',
+      source  => ["puppet:///modules/${repo_files}/conf.d"],
+      before  => File['NginxSyncConfMain'],
+      notify  => Service["nginx"],
+    }  
 
-  # Install & Update main config file
-  File {
-    owner => 'root',
-    group => 'nginx',
-    mode  => 0644, 
+    if $ssl == 'enabled' {
+      # Copiando certificado (usado no vhost enit.mte.br )
+      file { '/etc/nginx/server.crt':
+        path    => "/etc/nginx/server.crt",
+        source  => ["puppet:///modules/${repo_files}/conf/server.crt"],
+        before  => File['NginxSyncConfMain'],
+      } 
+      file { '/etc/nginx/server.key':
+        path    => "/etc/nginx/server.key",
+        source  => ["puppet:///modules/${repo_files}/conf/server.key"],
+        before  => File['NginxSyncConfMain'],
+      } 
+    }
   }
- 
-  file { '/etc/nginx/nginx.conf' :
-    path    => "/etc/nginx/nginx.conf",
-    source  => ['puppet:///modules/nginx/nginx.conf'],
-    notify  => Service['nginx'],
-    require => Package['nginx'],
-  } 
 
-  # Update virtual Hosts
-  file { '/etc/nginx/conf.d/aplicacoes.conf' :
-    path    => "/etc/nginx/conf.d/aplicacoes.conf",
-    source  => ['puppet:///modules/nginx/aplicacoes.conf'],
-    notify  => Service['nginx'],
-    require => Package['nginx'],
-  } 
-
+  # Class from /jfryman-nginx   
+  class { '::nginx::service': }
 
   # TODO: config dynamic vhosts
 

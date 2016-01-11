@@ -1,5 +1,5 @@
 class nginx::service {
-  service {'nginx': 
+  service {'nginx':
     name    => 'nginx',
     enable  => true,
     ensure  => running,

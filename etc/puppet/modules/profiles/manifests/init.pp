@@ -1,9 +1,9 @@
 
 #class profiles () inherits profiles::params 
 class profiles {
-  include profiles::params
+  #include profiles::params
 
-  class { 'profiles::motd' : enabled => $enable_motd, }
-  class { 'profiles::ssh' : enabled => $enable_ssh, }
+  #class { 'profiles::motd' : enabled => $enable_motd, }
+  #class { 'profiles::ssh' : enabled => $enable_ssh, }
 
 }

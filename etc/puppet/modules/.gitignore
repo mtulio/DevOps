@@ -1,4 +1,20 @@
+
+
+# Ignore Puppet labs modules
 concat/
-dns/
 stdlib/
+
+## DNS:
+dns/
+
+## Firewall:
 firewall/
+
+## Motd: 
+motd/
+registry/
+
+## Nginx: puppet module install jfryman-nginx
+nginx/
+apt/
+
