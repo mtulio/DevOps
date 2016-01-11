@@ -11,10 +11,10 @@ dns/
 firewall/
 
 ## Motd: 
-motd/
+#motd/
 registry/
 
 ## Nginx: puppet module install jfryman-nginx
-nginx/
+#nginx/
 apt/
 

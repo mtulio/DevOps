@@ -1,0 +1,5 @@
+[nginx]
+name=nginx RHEL repo
+baseurl=http://nginx.org/packages/rhel/$releasever/$basearch/
+gpgcheck=0
+enabled=1
