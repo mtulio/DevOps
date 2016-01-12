@@ -35,7 +35,24 @@
 #
 # Copyright 2016 Your name here, unless otherwise noted.
 #
-class zabbix {
+class zabbix (
+  $agent_dir     = $zabbix::params::agent_dir,
+  $server        = $zabbix::params::server,
+  $repository    = $zabbix::params::repository,
+  $agent_package = $zabbix::params::agent_package,
+  $agent_service = $zabbix::params::agent_service,
+) inherits zabbix::params {
 
+  # Zabbix user 
+  user { 'zabbix':
+    ensure => 'present',
+  }
+
+  # Package
+  include zabbix::repo
+  include zabbix::agent::package
+
+  # Service
+  include zabbix::service 
 
 }
