@@ -1,0 +1,14 @@
+{
+  "name": "mtulio-ssh",
+  "version": "0.1.0",
+  "author": "mtulio",
+  "summary": "Manage SSHd service",
+  "license": "Apache 2.0",
+  "source": "https://github.com/mtulio/puppet-mod-ssh",
+  "project_page": "https://github.com/mtulio/puppet-mod-ssh",
+  "issues_url": "https://github.com/mtulio/puppet-mod-ssh/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+

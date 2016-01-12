@@ -6,6 +6,9 @@ linux/
 ## Project home [zabbix]: https://github.com/mtulio/puppet-mod-zabbix
 #zabbix/
 
+## Project home [ssh]: https://github.com/mtulio/puppet-mod-ssh
+#ssh/
+
 # Ignore Puppet labs modules
 concat/
 stdlib/
