@@ -1,7 +1,10 @@
 
 # Ignore custom puppet modules
-## Project home: https://github.com/mtulio/puppet-linux
+## Project home [linux]: https://github.com/mtulio/puppet-linux
 linux/
+
+## Project home [zabbix]: https://github.com/mtulio/puppet-mod-zabbix
+#zabbix/
 
 # Ignore Puppet labs modules
 concat/
