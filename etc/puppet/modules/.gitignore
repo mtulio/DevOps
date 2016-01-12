@@ -1,4 +1,7 @@
 
+# Ignore custom puppet modules
+## Project home: https://github.com/mtulio/puppet-linux
+linux/
 
 # Ignore Puppet labs modules
 concat/
@@ -17,4 +20,5 @@ registry/
 ## Nginx: puppet module install jfryman-nginx
 #nginx/
 apt/
+
 
