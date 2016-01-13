@@ -5,7 +5,7 @@
 linux/
 
 ## Project home [zabbix]: https://github.com/mtulio/puppet-mod-zabbix
-#zabbix/
+zabbix/
 
 ## Project home [ssh]: https://github.com/mtulio/puppet-mod-ssh
 #ssh/
