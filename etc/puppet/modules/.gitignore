@@ -1,5 +1,16 @@
 
+##############################
+## MTulio's modules:
+## Project home [linux]: https://github.com/mtulio/puppet-linux
+linux/
 
+## Project home [zabbix]: https://github.com/mtulio/puppet-mod-zabbix
+#zabbix/
+
+## Project home [ssh]: https://github.com/mtulio/puppet-mod-ssh
+#ssh/
+
+##############################
 # Ignore Puppet labs modules
 concat/
 stdlib/
@@ -18,6 +29,3 @@ registry/
 #nginx/
 apt/
 
-## MTulio's modules:
-# Linux: https://github.com/mtulio/puppet-linux
-linux/
