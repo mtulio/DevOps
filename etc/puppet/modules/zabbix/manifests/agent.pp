@@ -4,7 +4,7 @@
 #class zabbix::agent inherits zabbix ( $agent_template = undef, ) {
 class zabbix::agent (
   $agent_template = undef,
-  $zabbix_server  = $server,
+  $zabbix_server  = $zabbix::params::server,
 ) inherits zabbix::params {
 
   # Install package  
