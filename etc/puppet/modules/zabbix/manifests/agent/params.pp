@@ -5,15 +5,14 @@
 class zabbix::agent::params {
   
   ### GENERAL PARAMETERS ###
-#  $server		= '
   $pid_file		= '/var/run/zabbix/zabbix_agentd.pid'
   $log_file		= '/var/log/zabbix/zabbix_agentd.log'
   $log_file_size	= '100'
   $debug_level		= '3'
   $source_ip		= undef
-  $en_remote_cmd	= '1' 
+  $en_remote_cmd	= '1'
   $log_remote_cmd	= '0'
-  $server		= undef 
+  $server		= 'default.template.zabbix'
   $listen_port		= '10050'
   $listen_ip		= '0.0.0.0'
   $start_agents		= '3'
