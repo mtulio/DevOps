@@ -11,10 +11,13 @@ dns/
 firewall/
 
 ## Motd: 
-#motd/
+motd/
 registry/
 
 ## Nginx: puppet module install jfryman-nginx
 #nginx/
 apt/
 
+## MTulio's modules:
+# Linux: https://github.com/mtulio/puppet-linux
+linux/
