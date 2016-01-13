@@ -29,3 +29,8 @@ registry/
 #nginx/
 apt/
 
+
+##############################
+# Temp & swap files
+
+

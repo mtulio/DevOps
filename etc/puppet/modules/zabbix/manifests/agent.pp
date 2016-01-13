@@ -8,8 +8,9 @@ class zabbix::agent (
 ) inherits zabbix::params {
 
   # Install package  
-  include zabbix::repo
-  package { $agent_package : ensure => 'latest', }
+  #include zabbix::repo
+  #package { $agent_package : ensure => 'latest', }
+  include zabbix::agent::package
 
   # Config service    
   service { $agent_service:
