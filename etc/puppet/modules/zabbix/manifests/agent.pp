@@ -7,17 +7,9 @@ class zabbix::agent (
   $zabbix_server  = $zabbix::params::server,
 ) inherits zabbix::params {
 
-  # Install package  
-  #include zabbix::repo
-  #package { $agent_package : ensure => 'latest', }
+  # Install 
   include zabbix::agent::package
-
-  # Config service    
-  service { $agent_service:
-    ensure  => 'running',
-    enable  => true,
-    require => Package[$agent_package],
-  }
+  include zabbix::agent::service
 
   # Config & Start
   if $agent_template == undef {
