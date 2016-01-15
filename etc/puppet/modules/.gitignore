@@ -7,8 +7,8 @@ linux/
 ## Project home [zabbix]: https://github.com/mtulio/puppet-mod-zabbix
 zabbix/
 
-## Project home [ssh]: https://github.com/mtulio/puppet-mod-ssh
-#ssh/
+## Project home [ssh]: //github.com/mtulio/puppet-mod-ssh.git
+ssh/
 
 ##############################
 # Ignore Puppet labs modules
