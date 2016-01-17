@@ -10,6 +10,9 @@ zabbix/
 ## Project home [ssh]: //github.com/mtulio/puppet-mod-ssh.git
 ssh/
 
+## Project home [profiles]: https://github.com/mtulio/puppet-mod-profiles.git
+profiles/
+
 ##############################
 # Ignore Puppet labs modules
 concat/
