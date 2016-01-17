@@ -1,0 +1,13 @@
+# File managed by puppet. 
+# Repositório de config do MTE: http://gitlab.cloud1.mte.prod/sysadmin/sysadmin/tree/production/0_REPO
+
+<%- if @domainname_real -%>
+domain <%= @domainname_real %>
+<%- end -%>
+<%- if @domainname_real -%>
+search <%= @domainname_real %>
+<%- end -%>
+search mte.br
+nameserver 10.252.102.1
+nameserver 10.252.1.116
+nameserver 10.252.1.120
