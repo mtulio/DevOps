@@ -38,7 +38,7 @@ function STATUS() {
 function CLONE() {
 
   # TODO
-  return 
+  #return 
 
   for REPO in $REPOS
   do
@@ -49,11 +49,41 @@ function CLONE() {
     fi
 
     # TODO
-    OPWD="$PWD"
-    cd $REPO
     echo "#######################################################: "
     echo "###>> Cloning repository [$REPO]: "
+
+    OPWD="$PWD"
+
+    if [ "$REPO" == "linux/" ]; then
+      if [ ! -d "$REPO" ]; then
+        mkdir linux/ >/dev/null 2>&1
+        cd $REPO
+        git clone https://github.com/mtulio/puppet-linux.git linux/
+      fi
+    elif [ "$REPO" == "ssh/" ]; then
+        mkdir ssh/ >/dev/null 2>&1
+        cd $REPO
+        git clone https://github.com/mtulio/puppet-mod-ssh.git ssh/
+
+    elif [ "$REPO" == "zabbix/" ]; then
+        mkdir zabbix/ >/dev/null 2>&1
+        cd $REPO
+        git clone https://github.com/mtulio/puppet-mod-zabbix.git zabbix/
+
+    elif [ "$REPO" == "profiles/" ]; then
+        mkdir profiles/ >/dev/null 2>&1
+        cd $REPO
+        git clone https://github.com/mtulio/puppet-mod-profiles.git profiles/
     
+    elif [ "$REPO" == "roles/" ]; then
+        mkdir roles/ >/dev/null 2>&1
+        cd $REPO
+        git clone https://github.com/mtulio/puppet-mod-roles.git roles/
+
+    else 
+      echo "#> Repository [$REPO] not found to be cloned."
+    fi
+ 
     cd $OPWD
   done
 
