@@ -1,5 +1,14 @@
 #MTulios Puppet Modules
 
+NEW: each module has its own project. Have a look : 
+
+* Project module [linux]: https://github.com/mtulio/puppet-linux
+* Project module [zabbix]: https://github.com/mtulio/puppet-mod-zabbix
+* Project module [ssh]: //github.com/mtulio/puppet-mod-ssh
+* Project module [profiles]: https://github.com/mtulio/puppet-mod-profiles
+* Project module [profiles]: https://github.com/mtulio/puppet-mod-roles
+
+
 ####Table of Contents
 
 [Overview](#overview)
