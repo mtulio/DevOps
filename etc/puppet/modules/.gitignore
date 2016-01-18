@@ -13,6 +13,9 @@ ssh/
 ## Project home [profiles]: https://github.com/mtulio/puppet-mod-profiles.git
 profiles/
 
+## Project home [profiles]: https://github.com/mtulio/puppet-mod-profiles.git
+roles/
+
 ##############################
 # Ignore Puppet labs modules
 concat/
