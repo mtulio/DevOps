@@ -2,7 +2,7 @@
 
 # Check / update / clone sub-repositories
 
-REPOS="./ linux/ ssh/ zabbix/ profiles/ roles/"
+REPOS="./ linux/ ssh/ zabbix/ profiles/ roles/ dnssec/"
 
 
 ## Project home [linux]: 
@@ -19,6 +19,9 @@ REPOS="./ linux/ ssh/ zabbix/ profiles/ roles/"
 
 ## Project home [roles]
 #> https://github.com/mtulio/puppet-mod-roles.git
+
+## Project home [dnssec]
+#> https://github.com/mtulio/puppet-mod-dnssec.git
 
 
 function STATUS() {
@@ -42,43 +45,38 @@ function CLONE() {
 
   for REPO in $REPOS
   do
+    echo "#######################################################: "
 
     if [ -d "$REPO" ]; then
       echo "## Directory [$REPO] already exists. Skipping clone of repository."
       continue
     fi
 
-    # TODO
-    echo "#######################################################: "
     echo "###>> Cloning repository [$REPO]: "
 
     OPWD="$PWD"
+    #if [ -d "$REPO" ]; then
+    #  #mkdir $REPO >/dev/null 2>&1
+    #  continue
+    #fi
 
     if [ "$REPO" == "linux/" ]; then
-      if [ ! -d "$REPO" ]; then
-        mkdir linux/ >/dev/null 2>&1
-        cd $REPO
-        git clone https://github.com/mtulio/puppet-linux.git linux/
-      fi
+      git clone https://github.com/mtulio/puppet-linux.git linux/
+
     elif [ "$REPO" == "ssh/" ]; then
-        mkdir ssh/ >/dev/null 2>&1
-        cd $REPO
-        git clone https://github.com/mtulio/puppet-mod-ssh.git ssh/
+      git clone https://github.com/mtulio/puppet-mod-ssh.git ssh/
 
     elif [ "$REPO" == "zabbix/" ]; then
-        mkdir zabbix/ >/dev/null 2>&1
-        cd $REPO
-        git clone https://github.com/mtulio/puppet-mod-zabbix.git zabbix/
+      git clone https://github.com/mtulio/puppet-mod-zabbix.git zabbix/
 
     elif [ "$REPO" == "profiles/" ]; then
-        mkdir profiles/ >/dev/null 2>&1
-        cd $REPO
-        git clone https://github.com/mtulio/puppet-mod-profiles.git profiles/
+      git clone https://github.com/mtulio/puppet-mod-profiles.git profiles/
     
     elif [ "$REPO" == "roles/" ]; then
-        mkdir roles/ >/dev/null 2>&1
-        cd $REPO
-        git clone https://github.com/mtulio/puppet-mod-roles.git roles/
+      git clone https://github.com/mtulio/puppet-mod-roles.git roles/
+    
+    elif [ "$REPO" == "dnssec/" ]; then
+      git clone https://github.com/mtulio/puppet-mod-dnssec.git dnssec/
 
     else 
       echo "#> Repository [$REPO] not found to be cloned."

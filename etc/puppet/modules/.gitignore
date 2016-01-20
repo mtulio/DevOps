@@ -13,8 +13,11 @@ ssh/
 ## Project home [profiles]: https://github.com/mtulio/puppet-mod-profiles.git
 profiles/
 
-## Project home [profiles]: https://github.com/mtulio/puppet-mod-roles.git
+## Project home [roles]: https://github.com/mtulio/puppet-mod-roles.git
 roles/
+
+## Project home [dnssec]: https://github.com/mtulio/puppet-mod-dnssec.git
+dnssec/
 
 ##############################
 # Ignore Puppet labs modules
