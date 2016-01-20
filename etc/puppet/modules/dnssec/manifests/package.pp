@@ -1,30 +1,19 @@
+#
+# == Class: DNSsec / Package
+#
+# Manage packages.
+#
 class dnssec::package (
-$package_name = $dnssec::params::package_name,
-$package_chroot = $dnssec::params::package_chroot
-) {
+  $package_name = $dnssec::params::package_name,
+  $package_chroot = $dnssec::params::package_chroot
+) inherits dnssec {
 
   package { 'bind':
-    name   => $package_name,
     ensure => present,
+    name   => $package_name,
   }
   package { 'bind-chroot':
-    name  => $package_chroot,
     ensure => present,
+    name   => $package_chroot,
   }
-
-
-#  $pack_bind = $osfamily ? {
-#    'RedHat' => 'bind',
-#    'Debian' => 'bind9',
-#    default  => 'bind',
-#  }
-  
-#  $pack_bind_jail = $osfamily ? {
-#    'RedHat' => 'bind-chroot',
-#    default  => 'bind-chroot',
-#  }
-
-#  package { [$pack_bind, $pack_bind_jail] :
-#    ensure => present,
-#  }
 }

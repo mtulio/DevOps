@@ -1,9 +1,16 @@
-class dnssec::service ($service_name = $dnssec::params::service_name) {
-  
-  service { 'named' :
+#
+# == Class: DNSsec / Package
+#
+# Manage service.
+#
+class dnssec::service (
+  $service_name = $dnssec::params::service_name
+) inherits dnssec {
+
+  service { 'named':
+    ensure  => running,
     name    => $service_name,
     enable  => true,
-    ensure  => running,
     require => Package['bind','bind-chroot'],
   }
 }

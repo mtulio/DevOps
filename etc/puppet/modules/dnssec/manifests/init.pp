@@ -1,6 +1,12 @@
-
-# Class created by Marco Tulio <https://github.com/mtulio/DevOps/tree/master/etc/puppet/modules>
-
+#
+# == Class: DNSsec
+#
+# This module to install and configure DNS server using BIND.
+#
+# === Examples
+#
+#  See test/ directory or README[Usage] documentation.
+#
 class dnssec (
   $package_name   = $dnssec::params::package_name,
   $package_chroot = $dnssec::params::package_chroot,
@@ -9,8 +15,12 @@ class dnssec (
   $config_zone    = $dnssec::params::config_zone,
   $dir_zone       = $dnssec::params::dir_zone,
   $dir_log        = $dnssec::params::dir_log,
-  $ip_addr        = $dnssec::params::ip_addr
+  $ip_addr        = $dnssec::params::ip_addr,
+  $script_sign    = $dnssec::params::script_sign,
 
+  $base_config     = undef,
+  $server_type     = 'master',
+  $dnssec_enabled  = 'no'
 ) inherits dnssec::params {
 
   # Instala e inicia o serviço
@@ -18,77 +28,60 @@ class dnssec (
   include dnssec::service
   include dnssec::exec
 
-  # en: Check each hostname and apply its profile
-  case $::hostname {
-    /(clitst01|dnseprd01|dnseprd02|dnseprd03|dnseprd04)/: {
-      $server_type = "master"
-      $dir_zone_m  = "${dir_zone}/${server_type}"
-      $pool        = "dmz"
-      $dnssec      = "yes"
-      
-      # Config server and sync data
-      dnssec::zonesync { $::hostname:
-        type   => $server_type,
-	pool   => $pool,
-        dnssec => $dnssec,
-      }
+  if $base_config {
+    $files_zone = "${base_config}/${server_type}/var_named"
+    $files_conf = "${base_config}/${server_type}/etc"
+    $use_template = 'no'
+  }
+  else {
+    # path of 'files' directory
+    $files_zone = "dnssec/pool_default/var_named/${server_type}"
+    $files_conf = 'dnssec/pool_default/etc'
+    $use_template = 'yes'
+  }
 
-      # en: Config server
-      dnssec::config { $::hostname:
-        type   => $server_type,
-	pool   => $pool,
-        dnssec => $dnssec,
-      }
+  dnssec::zonesync { $::hostname:
+    files_zone  => $files_zone,
+    server_type => $server_type,
+    dnssec_en   => $dnssec_enabled,
+  }
 
-      notice("# Todos os dados foram sincronizados do servidor MASTER")
-    }
-    'pmaster' : {
-      $server_type = "master"
-      $pool = "example"
-      $dir_zone_m = "${dir_zone}/${server_type}"
-      $dnssec = "yes"
+  # Config server
+  dnssec::config { $::hostname:
+    files_conf   => $files_conf,
+    use_template => $use_template,
+  }
+  
+  notice('# Todos os dados foram sincronizados do servidor MASTER')
 
-      dnssec::zonesync { $::hostname:
-        type   => $server_type,
-	pool   => $pool,
-        dnssec => $dnssec,
-      }
-
-      # en: Config server
-      dnssec::config { $::hostname:
-        type   => $server_type,
-	pool   => $pool,
-        dnssec => $dnssec,
-      }
-
-    } # finish server rhensprd01
-  } # finish case
 
   # Setup firewall rules
-  if $::osfamily == "redhat" and $::operatingsystemmajrelease == 7 {
-    ensure_packages("iptables-services",{'ensure' => "latest"})
-    Package["iptables-services"] -> Firewall <| |>
-    service { "firewalld": 
+  if $::osfamily == 'redhat' and $::operatingsystemmajrelease == 7 {
+
+    ensure_packages('iptables-services', {'ensure' => 'latest'})
+
+    Package['iptables-services'] -> Firewall <| |>
+
+    service { 'firewalld':
       enable => false,
     }
- 
-    service { "iptables":
+
+    service { 'iptables':
       enable => true,
     }
-  } 
+  }
 
   firewall { '000 accept TCP DNS queries ':
-    iniface  => 'eth0',
-    proto    => 'tcp',
-    port     => '53',
-    state    => ['RELATED', 'ESTABLISHED'],
-    action   => 'accept',
+    iniface => 'eth0',
+    proto   => 'tcp',
+    port    => '53',
+    state   => ['RELATED', 'ESTABLISHED'],
+    action  => 'accept',
   }
   firewall { '000 accept UDP DNS queries ':
-    iniface  => 'eth0',
-    proto    => 'udp',
-    port     => '53',
-    action   => 'accept',
+    iniface => 'eth0',
+    proto   => 'udp',
+    port    => '53',
+    action  => 'accept',
   }
-
 }
