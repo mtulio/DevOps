@@ -20,7 +20,7 @@ var server = app.listen(global.PORT, function () {
 
 })
 
-/* Init ROUTE */
+/* ROUTE */
 var route_index = require('./routes/index');
 var route_api = require('./routes/api');
 
