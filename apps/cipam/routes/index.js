@@ -11,10 +11,10 @@ var global = require("../global_params.js")
 router.get('/', function (request, response) {
 
   var uri = url.parse(request.url).pathname;
-  console.log("Uri received: %s", uri)
+  //console.log("Uri received: %s", uri)
 
   if (uri == '/') { uri = global.index; }
-  console.log("Uri received: %s", uri)
+  //console.log("Uri received: %s", uri)
 
   var filename = path.join(process.cwd(), uri);
   path.exists(filename, function(exists) {
@@ -25,7 +25,7 @@ router.get('/', function (request, response) {
       return;
     }
 
-    console.log("Reading file: " + uri);
+    //console.log("Reading file: " + uri);
     fs.readFile(filename, "binary", function(err, file) {
       if (err) {
         response.writeHead(500, {"Content-Type": "text/plain"  });
