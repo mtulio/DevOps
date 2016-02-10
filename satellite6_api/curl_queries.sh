@@ -34,11 +34,11 @@ curl -X GET -s -k -u ${SAT6_USER}:${SAT6_PASS} https://${SATELLITE6_SERVER}/api/
 
 ## Running a Generic Host Query
 ### The following query returns information for the host Satellite:
-curl -X GET -s -k -u ${SAT6_USER}:${SAT6_PASS} https://${SATELLITE6_SERVER}/api/v2/hosts/satellite6.example.com | python -mjson.tool
+curl -X GET -s -k -u ${SAT6_USER}:${SAT6_PASS} https://${SATELLITE6_SERVER}/api/v2/hosts/${SATELLITE6_SERVER} | python -mjson.tool
 
 ## Searching for Facts for a Specific Host
 ### The following query returns all facts for the host Satellite:
-curl -X GET -s -k -u ${SAT6_USER}:${SAT6_PASS} https://${SATELLITE6_SERVER}/api/v2/hosts/satellite6.example.com/facts | python -mjson.tool
+curl -X GET -s -k -u ${SAT6_USER}:${SAT6_PASS} https://${SATELLITE6_SERVER}/api/v2/hosts/${SATELLITE6_SERVER}/facts | python -mjson.tool
 
 ## Searching all Hosts for Matching Patterns
 ### The following query returns all hosts that match the pattern "example":
