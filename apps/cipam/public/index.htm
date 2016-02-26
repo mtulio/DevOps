@@ -1,84 +1,88 @@
 <!DOCTYPE html>
-<html  lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width,initial-scale=1,
-              maximum-scale=1, user-scalable=YES">
-        <title>
-            CIPAM
-        </title>
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700'
-              rel='stylesheet' type='text/css'>
-        <link href='stylesheets/cipam.css'
-              rel='stylesheet' type='text/css' >
-    </head>
-    <body breakpoint='{"400":"small-screen", "700":"medium-screen","1000":"large-screen"}'>
+<html lang="en" class=" has-js">
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  	<meta charset="utf-8">
 
-<div class="my-profile-container">
-    <div class="row">
-        <div class="pic">
-            <h1> CIPAM - Cloud IP Address Management </>
+	<title>Cloud IP Address Management</title>
+
+	<meta name="author" content="Cloud IP Address Management">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="./assets/css/styles.css" media="all">
+	<link rel="stylesheet" href="./assets/css/site.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            
+            <!-- LOGO -->
+            <a id="cipam-logo"> CIPAM </a>
+            <nav>
+                <ul class="list-divider-pipe">
+                    <li class="active"> <a href="#">Home</a> </li>
+                    <li> <a href="#./results">Results</a> </li>
+                    <li> <a href="#./about">About</a> </li>
+                </ul>
+            </nav>
         </div>
-    </div>
-    <div class="row">
-        <div class="about">
-            <button class="btn" ng-model="professional"
-                    ng-click="getDetail($event)"
-                    ng-class="{'selected':selected}"
-                    ng-disabled="selected">
-                Configuration
-            </button>
-            <button class="btn" ng-model="personal"
-                    ng-click="getDetail($event)"
-                    ng-disabled="!selected"
-                    ng-class="{'selected':!selected}">
-                Networks
-            </button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="display">
-            <div class="detailProfessional" ng-show="selected">
+    </header>
 
+    <div id="main">
+        <div class="container">
 
-                <div class="section">
-                    <div class="divider">
-						ROW Prof.A
-                    </div>
-                    <div class="divider">
-						ROW Prof.B
-                    </div>
+            <div id="home-intro">
+
+                <h2 id="home-downloadhead" >Available commands: </h2>
+		<table>
+		<tr>
+		<td>
+                <div class="home-downloadblock">
+		    <input type='button' value='Configuration' onclick='loadConf();' class="home-button" d>  </input>
                 </div>
-            </div>
-            <div class="detailPersonal" ng-show="!selected">
-                <div class="section">
-                    <div class="divider">
-                        <responsive-header targetText="Full Name">
-                        </responsive-header>
-                        <responsive-text targetText="{{personal.name}}">
-                        </responsive-text>
-                    </div>
-                    <div class="divider">
-                        <responsive-header targetText="Weight">
-                        </responsive-header>
-                        <responsive-text targetText="{{personal.weight}}">
-                        </responsive-text>
-                    </div>
-                </div>
+		</td><td>
+                  <div class="home-downloadblock">
+		    <input type='button' value='Networks' onclick='loadNet();' class="home-button" d>  </input>
+                  </div>
+		</td><td>
+                  <div class="home-downloadblock">
+		    <input type='button' value='Backends' onclick='loadBack();' class="home-button" d>  </input>
+                  </div>
+		</td></tr></table>
+
+                <p class="home-version home-version-banner"> Results: </p>
+
+                <!--<p>Reading from JSON</p>-->
+		<pre><code class="language-javascript">
+			<div id="resp01"></div>
+		</code></pre>
+		<!--<script type="text/javascript" src = "assets/js/networks.json"> </script>-->
+		<script type="text/javascript" src = "assets/js/functions.js"> </script>
+
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="footer">
-            <a ng-href='{{professional.social.twitter}}' class='symbol' title='&#xe286;'></a>
-            <a ng-href='{{professional.social.facebook}}' class='symbol' title='&#xe227;'></a>
-            <a ng-href='{{professional.social.linkedin}}' class='symbol' title='&#xe252;'></a>
-            <a ng-href='{{professional.social.googleplus}}' class='symbol' title='&#xe239;'></a>
-        </div>
-    </div>
-</div>
 
-        <!--external scripts end -->
-    </body>
+    <a href="/#" id="scrollToTop" style="display: none;">↑ <span>Scroll to top</span></a>
+    
+    <footer class="no-margin-top" role="contentinfo">
+    
+        <div class="cipam-footer">
+            <div class="container">
+                <div class="issue-link-container">
+                    <ul class="list-divider-pipe issue-link">
+                        <li><a href="https://github.com/mtulio">GitHub</a></li>
+                        <li><a href="https://forge.puppetlabs.com/mtulio">Puppet</a></li>
+                    </ul>
+                    <a class="cipam-logo" href="http://www.mtulio.eng.br">Cloud IP Address Management</a>
+                </div>
+    
+                <p>  © 2016 MTulio Company. All Rights Reserved. Portions of this site originally © 2016 Node.js. </p>
+            </div>
+        </div>
+    
+    </footer>
+
+</body>
 </html>
