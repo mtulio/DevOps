@@ -18,7 +18,8 @@
 var express = require('express');
 var router = express.Router();
 var fs = require("fs"),
-  url = require("url");
+  url = require("url"),
+  http = require("http");
 
 var global = require("../global_params.js")
 
@@ -37,5 +38,28 @@ router.get('/getConfigNets', function (req, res) {
     res.end( data );
   });
 })
+
+router.get('/getConfigNets2', function(req, res) {
+
+  var url = 'http://graph.facebook.com/517267866/?fields=picture';
+  var fbResponse;
+  http.get(url, function(res){
+    var body = '';
+
+    res.on('data', function(chunk){
+        body += chunk;
+    });
+
+    res.on('end', function() {
+        fbResponse = JSON.parse(body);
+        //console.log("Got a response: ", fbResponse.picture);
+        req.write( fbResponse.picture );
+	req.end();
+    });
+  }).on('error', function(e){
+      console.log("Got an error: ", e);
+  });
+})
+
 
 module.exports = router;

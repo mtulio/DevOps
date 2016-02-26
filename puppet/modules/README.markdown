@@ -2,18 +2,18 @@
 
 NEW: each module has its own project. Have a look : 
 
-* Project module [linux]: https://github.com/mtulio/puppet-linux
-* Project module [zabbix]: https://github.com/mtulio/puppet-mod-zabbix
-* Project module [ssh]: //github.com/mtulio/puppet-mod-ssh
-* Project module [profiles]: https://github.com/mtulio/puppet-mod-profiles
-* Project module [profiles]: https://github.com/mtulio/puppet-mod-roles
 
 
 ####Table of Contents
 
 [Overview](#overview)
-[Modules](#modules)
-*  [Modules - motd](#modules-motd)
+[Published Modules](#publised-modules)
+* Project module: [mtulio-linux](https://github.com/mtulio/puppet-linux)
+* Project module: [mtulio-zabbix](https://github.com/mtulio/puppet-mod-zabbix)
+* Project module: [mtulio-ssh](https://github.com/mtulio/puppet-mod-ssh)
+* Project module: [mtulio-profiles](https://github.com/mtulio/puppet-mod-profiles)
+* Project module: [mtulio-roles](https://github.com/mtulio/puppet-mod-roles)
+[Local Modules](#local-modules)
 *  [Modules - apache](#modules-apache)
 *  [Modules - named](#modules-named)
 *  [Modules - nginx](#modules-nginx)
@@ -22,7 +22,32 @@ NEW: each module has its own project. Have a look :
 
 Adds a custom puppet modules
 
-##Modules
+## Published Modules
+
+| Module | Description | Dependencies |
+|:-:|:-:|:-:|
+| roles(#module-roles) | Puppet Business Layer | profiles(#module-profiles) |
+ 
+| c | c | c |
+| d | a | a |
+
+| Tables        | Are           | Cool   |
+| -------------:|:-------------:| ------:|
+| col 3 is      | right-aligned | $1600  |
+| col 2 is      | centered      |   $12  |
+| zebra stripes | are neat      |    $1  |
+
+
+Markdown | Less | Pretty
+--- | --- | ---
+*Still* | `renders` | **nicely**
+1 | 2 | 3
+
+
+## Local Modules
+
+
+
 
 ###Module: motd
 
@@ -73,3 +98,11 @@ See project at https://forge.puppetlabs.com/theforeman/dns
 ###Module: Tests
 
 This module is only to tests syntax and isolated tests of puppet lang. ;)
+
+
+---
+
+# References
+
+* [Markdown-Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [Markdown-Cheatsheet repository](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
