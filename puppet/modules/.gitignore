@@ -19,6 +19,9 @@ roles/
 ## Project home [dnssec]: https://github.com/mtulio/puppet-mod-dnssec.git
 dnssec/
 
+## [puppet-git] Fork from https://github.com/mxhero/puppet-git
+git/
+
 ##############################
 # Ignore Puppet labs modules
 concat/
