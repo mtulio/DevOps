@@ -31,10 +31,13 @@ function STATUS() {
     OPWD="$PWD"
     cd $REPO
     echo "#######################################################: "
-    echo "###>> Checking status of repository [$REPO]: "
+    echo -n "###>> Checking status of repository [$REPO]: "
+    if [ -d .git/ ]; then echo "[OK]"
+    else echo "[FAIL: This directory is not a root repository]"; fi
     git status  
     cd $OPWD
   done
+  echo "#######################################################: "
 
 }
 
