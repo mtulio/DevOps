@@ -147,3 +147,6 @@ curl -H "Accept:application/json,version=2" -H "Content-Type:application/json" -
 curl -s -k -u ${SAT6_USER}:${SAT6_PASS} https://${SATELLITE6_SERVER}/api/v2/hosts?search=os_description=\"RHEL+Server+6.6\" | python -mjson.tool
 
 
+####
+# Local documentation can be found on your server: https://YOUR_SATELLITE/apidoc/v2.html
+
