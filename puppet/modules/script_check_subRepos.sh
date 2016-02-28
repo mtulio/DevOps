@@ -2,7 +2,7 @@
 
 # Check / update / clone sub-repositories
 
-REPOS="./ linux/ ssh/ zabbix/ profiles/ roles/ dnssec/ git/"
+REPOS="./ linux/ ssh/ zabbix/ profiles/ roles/ dnssec/ git/ nfs/"
 
 
 ## Project home [linux]: 
@@ -25,6 +25,9 @@ REPOS="./ linux/ ssh/ zabbix/ profiles/ roles/ dnssec/ git/"
 
 ## [puppet-git] Fork from https://github.com/mxhero/puppet-git
 #> https://github.com/mtulio/puppet-git.git
+
+## [puppet-nfs] Fork from https://github.com/cccccccc/puppet-nfs
+#> https://github.com/mtulio/puppet-nfs.git
 
 function STATUS() {
 
@@ -85,6 +88,9 @@ function CLONE() {
     
     elif [ "$REPO" == "git/" ]; then
       git clone https://github.com/mtulio/puppet-git git/
+    
+    elif [ "$REPO" == "nfs/" ]; then
+      git clone https://github.com/mtulio/puppet-nfs nfs/
 
     else 
       echo "#> Repository [$REPO] not found to be cloned."
