@@ -6,36 +6,22 @@
 #
 # Created by Marco Tulio R Braga <git@mtulio.eng.br>
 # Created at Feb, 28 2015
+# Script URL: https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py
 #
 
 import json, ast, os
 from pprint import pprint
 
-####################################
+SCRIPT_URL = 'https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py'
 
+####################################
+# Read JSON file
 def getJson(file_metadata):
-  #> JSON file
-  #file_metadata = 'metadata.json'
-  #> READ JSON file
+
   with open(file_metadata) as data_file:    
     data_jsonU = json.load(data_file)
 
   #pprint(data_jsonU)
-  
-  #> PARSING JSON data
-  # remove literal 'u'
-  #print "JSON Fail: ", json.loads(json.dumps(data))
-  #print "AST Win:", ast.literal_eval(json.dumps(data))
-  
-  #pprint(data)
-  #pprint(data_ast['requirements'][0]['name'])
-  #pprint(data_ast['requirements'][0]['version_requirement'])
-
-  #> PRINT VALUES
-  #pprint(data)
-
-  if file_metadata == 'motd/metadata.json':
-    pprint(data_jsonU)
 
   return ast.literal_eval(json.dumps(data_jsonU))
 
@@ -48,15 +34,8 @@ def parseJSON(data):
     data_source, data_project_page, data_issues_url, data_description, data_os_support, \
     data_requirements, data_dependencies, data_tags
 
-#  data_name = data_version = data_author = data_summary = data_license = \
-#    data_source = data_project_page = data_issues_url = data_description = data_os_support = \
-#    data_requirements = data_dependencies = ''
-
-
   ##> Get all keys available on metadata
   metadata_keys = data.keys()
-  #print "KEYS=%s" % metadata_keys
-
   count = 0
 
   ###> Get metadata keys
@@ -143,7 +122,9 @@ def getModuleInfo(metafile, modname):
   else:
     md_table += "| `NAME`         | `WARN:` _*Undefined value or `metadata.json` cannot be found*_ |\n"
   if data_version:
-    md_table += "| `VERSION`      | **%s**                |\n" % data_version
+    pforge = data_name.split('-')
+    pforge_url = '[![Puppet Forge](http://img.shields.io/puppetforge/v/%s/%s.svg)](https://forge.puppetlabs.com/%s/%s)' % (pforge[0], pforge[1], pforge[0], pforge[1])
+    md_table += "| `VERSION`      | **%s**  %s              |\n" % (data_version, pforge_url)
   else:
     md_table += "| `VERSION`      | `WARN:` _*Undefined value or `metadata.json` cannot be found*_ |\n"
   if data_summary:
@@ -205,7 +186,7 @@ def main():
     os.remove(OUTPUT_FILE)
 
   md_table_head  = '## PUPPET MODULES \n\n'
-  md_table_head += '> > > > NOTE: This file was created automatically by script: ' + __file__ + '\n\n'
+  md_table_head += '> > > > NOTE: This file was created automatically by script: [' + __file__ + ']('+ SCRIPT_URL +')\n\n'
   md_table_index = 'Table of contents: \n'
   md_table_body  = '\n'
 
