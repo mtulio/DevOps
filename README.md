@@ -1,6 +1,6 @@
 ## PUPPET MODULES 
 
-> > > > NOTE: This file was created automatically by script: [./build_PUPPET_MODULES_INFO.py](https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py)
+> > > > NOTE: This file was created automatically by script: [./build_PUPPET_MODULES_INFO.py](https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py) at [Sun Feb 28 05:42:49 2016]
 
 Table of contents: 
 * [MODULE: apt](#module-apt)
