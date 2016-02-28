@@ -10,6 +10,7 @@ Table of contents:
 * [MODULE: ssh](#module-ssh)
 * [MODULE: registry](#module-registry)
 * [MODULE: dns](#module-dns)
+* [MODULE: nfs](#module-nfs)
 * [MODULE: nginx](#module-nginx)
 * [MODULE: apache](#module-apache)
 * [MODULE: git](#module-git)
@@ -81,7 +82,7 @@ Table of contents:
 | -------------- | --------------------- |
 | `ALIAS NAME`         | **dnssec**                |
 | `NAME`         | **mtulio-dnssec**                |
-| `VERSION`      | **1.0.1**  [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/dnssec.svg)](https://forge.puppetlabs.com/mtulio/dnssec)              |
+| `VERSION`      | **1.0.2**  [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/dnssec.svg)](https://forge.puppetlabs.com/mtulio/dnssec)              |
 | `SUMMARY`      | **Module to manage DNS using CHROOT and sign DNSsec zones.**                |
 | `DESCRIPTION`  | **Module to manage DNS using CHROOT and sign DNSsec zones.**                |
 | `DEPENDENCIES` | (puppetlabs-stdlib >= 4.10.0) (puppetlabs-firewall >= 1.1.3)                     |
@@ -146,6 +147,24 @@ Table of contents:
 | `PROJECT CODE` | **git://github.com/theforeman/puppet-dns**                |
 | `PROJECT PAGE` | **https://github.com/theforeman/puppet-dns**                |
 | `ISSUES`       | **https://github.com/theforeman/puppet-dns/issues**                |
+
+### MODULE-[nfs]
+
+| METADATA       | VALUE                 |
+| -------------- | --------------------- |
+| `ALIAS NAME`         | **nfs**                |
+| `NAME`         | **gnubilafrance-nfs**                |
+| `VERSION`      | **0.1.2**  [![Puppet Forge](http://img.shields.io/puppetforge/v/gnubilafrance/nfs.svg)](https://forge.puppetlabs.com/gnubilafrance/nfs)              |
+| `SUMMARY`      | **Simple NFS client and server configuration**                |
+| `DESCRIPTION`  | `WARN:` _*Undefined value or `metadata.json` cannot be found*_ |
+| `DEPENDENCIES` | (puppetlabs/concat >= 1.0.0 < 2.0.0) (puppetlabs/stdlib >= 2.3.0 < 5.0.0) (puppetlabs/firewall >= 1.0.0 < 2.0.0)                     |
+| `OS SUPPORT`   | (RedHat ['5', '6']) (CentOS ['5', '6']) (Debian ['6', '7'])                     |
+| `REQUIREMENTS` | `WARN:` _*Undefined value or `metadata.json` cannot be found*_ |
+| `AUTHOR`       | **Baptiste Grenier <bgrenier@gnubila.fr>**                |
+| `LICENSE`      | **Apache-2.0**                |
+| `PROJECT CODE` | **https://github.com/gnubila-france/puppet-nfs**                |
+| `PROJECT PAGE` | **https://github.com/gnubila-france/puppet-nfs**                |
+| `ISSUES`       | **https://github.com/gnubila-france/puppet-nfs/issues**                |
 
 ### MODULE-[nginx]
 
