@@ -23,6 +23,7 @@ def getJson(file_metadata):
 
   #pprint(data_jsonU)
 
+  #TODO: there is a bug when a value of key is null, we cannot use ast.literal_eval(), but what function I can use? :(
   return ast.literal_eval(json.dumps(data_jsonU))
 
 #######################
@@ -62,24 +63,76 @@ def parseJSON(data):
     if key == 'description':
       data_description = data['description']
     if key == 'operatingsystem_support':
+      #data_os_support = data['operatingsystem_support']
       data_LIST = data['operatingsystem_support']
       data_os_support = ''
       if data_LIST:
         for arr in data_LIST:
-          data_os_support += "(%s %s) " % (arr['operatingsystem'], arr['operatingsystemrelease'])
+          arr_ks = arr.keys()
+          data_os_support_os = ''
+          data_os_support_rl = ''
+          for arr_k in arr_ks:
+            if arr_k == 'operatingsystem':
+              data_os_support_os = arr['operatingsystem']
+            if arr_k == 'operatingsystemrelease':
+              data_os_support_rl = arr['operatingsystemrelease']
+          data_os_support += "(%s %s) " % (data_os_support_os, data_os_support_rl)
+          #if arr['operatingsystemrelease']:
+          #  data_os_support += "(%s %s) " % (arr['operatingsystem'], arr['operatingsystemrelease'])
+          #else:
+          #  data_os_support += "(%s) " % (arr['operatingsystem'])
           #print " %s %s" % (arr['operatingsystem'], arr['operatingsystemrelease'])
     if key == 'requirements':
+      #data_requirements = data['requirements']
+      data_requirements = data['requirements']
       data_LIST = data['requirements']
       data_requirements = ''
       if data_LIST:
         for arr in data_LIST:
-          data_requirements += "(%s %s) " % (arr['name'], arr['version_requirement'])
+          arr_ks = arr.keys()
+          data_requirements_nm = ''
+          data_requirements_vr = ''
+          for arr_k in arr_ks:
+            if arr_k == 'name':
+              data_requirements_nm = arr['name']
+            if arr_k == 'version_requirement':
+              data_requirements_vr = arr['version_requirement']
+          data_requirements += "(%s %s) " % (data_requirements_nm, data_requirements_vr)
+      #data_LIST = data['requirements']
+      #data_requirements = ''
+      #if data_LIST:
+      #  for arr in data_LIST:
+      #    #data_requirements += "(%s %s) " % (arr['name'], arr['version_requirement'])
+      #    if arr['version_requirement']:
+      #      data_requirements += "(%s %s) " % (arr['name'], arr['version_requirement'])
+      #    else:
+      #      data_requirements += "(%s %s) " % (arr['name'])
     if key == 'dependencies':
+      #data_dependencies = data['dependencies']
+      data_dependencies = data['dependencies']
       data_LIST = data['dependencies']
       data_dependencies = ''
       if data_LIST:
         for arr in data_LIST:
-          data_dependencies += "(%s %s) " % (arr['name'], arr['version_requirement'])
+          arr_ks = arr.keys()
+          data_dependencies_nm = ''
+          data_dependencies_vr = ''
+          for arr_k in arr_ks:
+            if arr_k == 'name':
+              data_dependencies_nm = arr['name']
+            if arr_k == 'version_requirement':
+              data_dependencies_vr = arr['version_requirement']
+          data_dependencies += "(%s %s) " % (data_dependencies_nm, data_dependencies_vr)
+      #data_LIST = data['dependencies']
+      #data_dependencies = ''
+      #if data_LIST:
+      #  for arr in data_LIST:
+      #    #data_dependencies += "(%s %s) " % (arr['name'], arr['version_requirement'])
+      #    if arr['version_requirement']:
+      #      data_dependencies += "(%s %s) " % (arr['name'], arr['version_requirement'])
+      #    else:
+      #      data_dependencies += "(%s %s) " % (arr['name'])
+
 
   #print "DATA_name=%s" % data_name
   #print "DATA_author=%s" % data_author
