@@ -2,26 +2,26 @@
 ***
 > > > > NOTE: This file is parte of [PUPPET MODULES](PUPPET_MODULES.md) with all metadata modules information.
 
-| MODULE   | LOCAL VERSION   | LATEST VERSION | [CODE WARNS](#modules-code-style-check) | [CODE ERRORS](#modules-code-style-check) |
-| -------- | --------------- | -------------- | ---------- | ----------- |
-| apt | 2.2.1 | puppetlabs-apt [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/apt.svg)](https://forge.puppetlabs.com/puppetlabs/apt) | 29 | 0 |
-| stdlib | 4.10.0 | puppetlabs-stdlib [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/stdlib.svg)](https://forge.puppetlabs.com/puppetlabs/stdlib) | 6 | 0 |
-| 0_REPO | `NA` | `NA` | 0 | 0 |
-| dnssec | 1.0.2 | mtulio-dnssec [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/dnssec.svg)](https://forge.puppetlabs.com/mtulio/dnssec) | 8 | 0 |
-| ssh | 1.3.1 | mtulio-ssh [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/ssh.svg)](https://forge.puppetlabs.com/mtulio/ssh) | 4 | 0 |
-| registry | 1.1.3 | puppetlabs-registry [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/registry.svg)](https://forge.puppetlabs.com/puppetlabs/registry) | 4 | 4 |
-| dns | 3.1.0 | theforeman-dns [![Puppet Forge](http://img.shields.io/puppetforge/v/theforeman/dns.svg)](https://forge.puppetlabs.com/theforeman/dns) | 5 | 0 |
-| nfs | 0.1.2 | gnubilafrance-nfs [![Puppet Forge](http://img.shields.io/puppetforge/v/gnubilafrance/nfs.svg)](https://forge.puppetlabs.com/gnubilafrance/nfs) | 7 | 0 |
-| nginx | `NA` | `NA` | 38 | 4 |
-| apache | `NA` | `NA` | 31 | 17 |
-| git | 1.0.0 | jproyo-git [![Puppet Forge](http://img.shields.io/puppetforge/v/jproyo/git.svg)](https://forge.puppetlabs.com/jproyo/git) | 8 | 0 |
-| firewall | 1.7.2 | puppetlabs-firewall [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/firewall.svg)](https://forge.puppetlabs.com/puppetlabs/firewall) | 14 | 0 |
-| concat | 1.2.5 | puppetlabs-concat [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/concat.svg)](https://forge.puppetlabs.com/puppetlabs/concat) | 12 | 0 |
-| filedemo | `NA` | `NA` | 17 | 6 |
-| linux | 1.1.1 | mtulio-linux [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/linux.svg)](https://forge.puppetlabs.com/mtulio/linux) | 1 | 0 |
-| zabbix | 1.1.1 | mtulio-zabbix [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/zabbix.svg)](https://forge.puppetlabs.com/mtulio/zabbix) | 3 | 0 |
-| roles | 1.0.0 | mtulio-roles [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/roles.svg)](https://forge.puppetlabs.com/mtulio/roles) | 0 | 0 |
-| profiles | 1.1.1 | mtulio-profiles [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/profiles.svg)](https://forge.puppetlabs.com/mtulio/profiles) | 7 | 0 |
+| MODULE   | LOCAL VERSION   | LATEST VERSION | [ALL ALERTS](#modules-code-style-check) | WARNS | ERRORS | GENERAL |
+| -------- | --------------- | -------------- | ---------- | ----------- | ----------- | ----------- |
+| apt | 2.2.1 | puppetlabs-apt [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/apt.svg)](https://forge.puppetlabs.com/puppetlabs/apt) | 29 | 29 | 0 | 0 |
+| stdlib | 4.10.0 | puppetlabs-stdlib [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/stdlib.svg)](https://forge.puppetlabs.com/puppetlabs/stdlib) | 6 | 6 | 0 | 0 |
+| 0_REPO | `NA` | `NA` | 0 | 0 | 0 | 0 |
+| dnssec | 1.0.2 | mtulio-dnssec [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/dnssec.svg)](https://forge.puppetlabs.com/mtulio/dnssec) | 8 | 8 | 0 | 0 |
+| ssh | 1.3.1 | mtulio-ssh [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/ssh.svg)](https://forge.puppetlabs.com/mtulio/ssh) | 4 | 4 | 0 | 0 |
+| registry | 1.1.3 | puppetlabs-registry [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/registry.svg)](https://forge.puppetlabs.com/puppetlabs/registry) | 8 | 4 | 4 | 0 |
+| dns | 3.1.0 | theforeman-dns [![Puppet Forge](http://img.shields.io/puppetforge/v/theforeman/dns.svg)](https://forge.puppetlabs.com/theforeman/dns) | 5 | 5 | 0 | 0 |
+| nfs | 0.1.2 | gnubilafrance-nfs [![Puppet Forge](http://img.shields.io/puppetforge/v/gnubilafrance/nfs.svg)](https://forge.puppetlabs.com/gnubilafrance/nfs) | 7 | 7 | 0 | 0 |
+| nginx | `NA` | `NA` | 42 | 38 | 4 | 0 |
+| apache | `NA` | `NA` | 48 | 31 | 17 | 0 |
+| git | 1.0.0 | jproyo-git [![Puppet Forge](http://img.shields.io/puppetforge/v/jproyo/git.svg)](https://forge.puppetlabs.com/jproyo/git) | 8 | 8 | 0 | 0 |
+| firewall | 1.7.2 | puppetlabs-firewall [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/firewall.svg)](https://forge.puppetlabs.com/puppetlabs/firewall) | 14 | 14 | 0 | 0 |
+| concat | 1.2.5 | puppetlabs-concat [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/concat.svg)](https://forge.puppetlabs.com/puppetlabs/concat) | 12 | 12 | 0 | 0 |
+| filedemo | `NA` | `NA` | 23 | 17 | 6 | 0 |
+| linux | 1.1.1 | mtulio-linux [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/linux.svg)](https://forge.puppetlabs.com/mtulio/linux) | 1 | 1 | 0 | 0 |
+| zabbix | 1.1.1 | mtulio-zabbix [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/zabbix.svg)](https://forge.puppetlabs.com/mtulio/zabbix) | 3 | 3 | 0 | 0 |
+| roles | 1.0.0 | mtulio-roles [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/roles.svg)](https://forge.puppetlabs.com/mtulio/roles) | 0 | 0 | 0 | 0 |
+| profiles | 1.1.1 | mtulio-profiles [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/profiles.svg)](https://forge.puppetlabs.com/mtulio/profiles) | 7 | 7 | 0 | 0 |
 ## MODULES CODE STYLE CHECK
 
 ***

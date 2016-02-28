@@ -1,8 +1,19 @@
 #! /usr/bin/python
 
 #
-# Script create to build puppet modules metadata (metadata.json) in tables.
-# The result will be saved on PUPPET_MODULES.md (the file is replaced)
+# Script create a reume of all your puppets. 
+# DESCRIPTION - This script does:
+# 1   - Checks all directory behind it and create a table of information extracted from metadata.json (if is available)
+# 2.a - Checks Puppet Module Code Style of each module and create an 'STATS TABLE'
+# 2.b - Reports all non-compliances lines using 'puppet-lint' ot check the codes
+#
+# NOTE: Place this script on root directory of your modules (environment/modules)
+#
+# EXAMPLE: $./build_PUPPET_MODULES_INFO.py
+# '> See files:
+# '-> PUPPET_MODULES_INFO.md : Description 2.a and 2.b
+# '-> PUPPET_MODULES_STAT.md : Description 1.
+# '-> PUPPET_MODULES.md      : PUPPET_MODULES_STAT.md and PUPPET_MODULES_INFO.md
 #
 # Created by Marco Tulio R Braga <git@mtulio.eng.br>
 # Created at Feb, 28 2015
@@ -14,22 +25,18 @@ from pprint import pprint
 
 SCRIPT_URL = 'https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py'
 
-
-
 ####################################
 def getManifestStyleGuide(modname):
   # Check that your Puppet manifest conform to the style guide
   # Require puppet-lint installed on your profile: # gem install puppet-lint
   # See also: http://puppet-lint.com/
 
-  global code_warn, code_error, code_warn_cnt, code_error_cnt
-  code_warn_tmp = code_error_tmp = ''
+  global code_warn, code_error, code_warn_cnt, code_error_cnt, code_gen, code_gen_cnt, code_all_cnt
+  code_warn_tmp = code_error_tmp = code_gen_tmp = ''
 
   BIN_CHECK='~/bin/puppet-lint'
   if not os.path.isfile(BIN_CHECK):
-    #code_warn = code_error = code_warn_cnt = code_error_cnt = 'N/I'
-    #return 
-    code_warn = code_error = code_warn_cnt = code_error_cnt = ''
+    code_warn = code_error = code_gen = code_warn_cnt = code_error_cnt = code_gen_cnt = code_all_cnt = ''
 
   mod_path = os.path.dirname(os.path.realpath(__file__)) + '/' + modname
   cmd_run = BIN_CHECK + ' ' + mod_path
@@ -37,31 +44,30 @@ def getManifestStyleGuide(modname):
   #stream = os.system(cmd_run)
   fd = os.popen(cmd_run)
   stream = fd.read()
-  #print "#############> stream=[%s]" % stream
 
   # Remove Module directory path
   code_result_by_file = stream.split(mod_path)
-  #pprint(code_result_by_file)
 
   # Filter stream by error type
   for line in code_result_by_file:
-    #print '##>> line=' + line
     line = line.replace('\n','|\n')
     if 'WARNING:' in line:
       code_warn += '| `WARNING` |' + line
       code_warn_tmp += line
-    if 'ERROR:' in line:
+    elif 'ERROR:' in line:
       code_error += '| `ERRORS` |' + line
       code_error_tmp += line
-      #code_error += line
-
-  #print "warn="+code_warn
-  #print "error="+code_error
+    elif line:
+      code_gen += '| `GENERAL` |' + line
+      code_gen_tmp += line 
+      print "code_gen=[%s] line=[%s]" % (code_gen, line)
 
   # Get occurrences by original stream
-  code_warn_cnt = str(code_warn_tmp.count('WARNING:'))
+  code_warn_cnt  = str(code_warn_tmp.count('WARNING:'))
   code_error_cnt = str(code_error_tmp.count('ERROR:'))
- 
+  code_gen_cnt   = str(code_gen_tmp.count('\n'))
+
+  code_all_cnt   = str(code_warn_tmp.count('WARNING:') + code_error_tmp.count('ERROR:') + code_gen_tmp.count('\n'))
 
 ####################################
 # Read JSON file
@@ -91,10 +97,8 @@ def parseJSON(data):
   ###> Get metadata keys
   for key in metadata_keys:
     count += 1
-    #print "[%d] - %s" % (count, key)
     if key == 'name':
       data_name = data['name']
-      #print "NAME=%s" % data['name']
     if key == 'version':
       data_version = data['version']
     if key == 'author':
@@ -112,7 +116,6 @@ def parseJSON(data):
     if key == 'description':
       data_description = data['description']
     if key == 'operatingsystem_support':
-      #data_os_support = data['operatingsystem_support']
       data_LIST = data['operatingsystem_support']
       data_os_support = ''
       if data_LIST:
@@ -126,13 +129,7 @@ def parseJSON(data):
             if arr_k == 'operatingsystemrelease':
               data_os_support_rl = arr['operatingsystemrelease']
           data_os_support += "(%s %s) " % (data_os_support_os, data_os_support_rl)
-          #if arr['operatingsystemrelease']:
-          #  data_os_support += "(%s %s) " % (arr['operatingsystem'], arr['operatingsystemrelease'])
-          #else:
-          #  data_os_support += "(%s) " % (arr['operatingsystem'])
-          #print " %s %s" % (arr['operatingsystem'], arr['operatingsystemrelease'])
     if key == 'requirements':
-      #data_requirements = data['requirements']
       data_requirements = data['requirements']
       data_LIST = data['requirements']
       data_requirements = ''
@@ -147,17 +144,7 @@ def parseJSON(data):
             if arr_k == 'version_requirement':
               data_requirements_vr = arr['version_requirement']
           data_requirements += "(%s %s) " % (data_requirements_nm, data_requirements_vr)
-      #data_LIST = data['requirements']
-      #data_requirements = ''
-      #if data_LIST:
-      #  for arr in data_LIST:
-      #    #data_requirements += "(%s %s) " % (arr['name'], arr['version_requirement'])
-      #    if arr['version_requirement']:
-      #      data_requirements += "(%s %s) " % (arr['name'], arr['version_requirement'])
-      #    else:
-      #      data_requirements += "(%s %s) " % (arr['name'])
     if key == 'dependencies':
-      #data_dependencies = data['dependencies']
       data_dependencies = data['dependencies']
       data_LIST = data['dependencies']
       data_dependencies = ''
@@ -172,16 +159,6 @@ def parseJSON(data):
             if arr_k == 'version_requirement':
               data_dependencies_vr = arr['version_requirement']
           data_dependencies += "(%s %s) " % (data_dependencies_nm, data_dependencies_vr)
-      #data_LIST = data['dependencies']
-      #data_dependencies = ''
-      #if data_LIST:
-      #  for arr in data_LIST:
-      #    #data_dependencies += "(%s %s) " % (arr['name'], arr['version_requirement'])
-      #    if arr['version_requirement']:
-      #      data_dependencies += "(%s %s) " % (arr['name'], arr['version_requirement'])
-      #    else:
-      #      data_dependencies += "(%s %s) " % (arr['name'])
-
 
 def getModuleInfo(metafile, modname):
 
@@ -189,8 +166,8 @@ def getModuleInfo(metafile, modname):
     data_source, data_project_page, data_issues_url, data_description, data_os_support, \
     data_requirements, data_dependencies, data_tags
 
-  global code_warn, code_error, code_warn_cnt, code_error_cnt
-  code_warn = code_error = code_warn_cnt = code_error_cnt = 'N/I'
+  global code_warn, code_error, code_warn_cnt, code_error_cnt, code_gen, code_gen_cnt
+  code_warn = code_error = code_warn_cnt = code_error_cnt = code_gen = code_gen_cnt = 'N/I'
 
   global md_stat_body, md_codecheck
 
@@ -198,7 +175,7 @@ def getModuleInfo(metafile, modname):
     data_name = data_version = data_author = data_summary = data_license = \
       data_source = data_project_page = data_issues_url = data_description = data_os_support = \
       data_requirements = data_dependencies = data_tags = False
-    #data_name = modname
+
   else:
     # get & parse JSON
     data_name = data_version = data_author = data_summary = data_license = \
@@ -278,19 +255,16 @@ def getModuleInfo(metafile, modname):
   md_table += '\n'
 
   getManifestStyleGuide(modname)
-  md_stat_body += " %s | %s |\n" % (code_warn_cnt, code_error_cnt)
+  md_stat_body += " %s | %s | %s | %s |\n" % (code_all_cnt, code_warn_cnt, code_error_cnt, code_gen_cnt)
   md_codecheck += "\n### MODULE-cst-[%s]\n\n" % (modname)  
   md_codecheck += "| TYPE  | OCCURRENCES ON MODULE [%s]  |\n" % (modname)
   md_codecheck += "| ---------- | ------ |\n"
   #md_codecheck += "| `NAME`     | **%s** |\n" % (modname)
   md_codecheck += code_warn
   md_codecheck += code_error
-
-  #print md_stat_body
-  #print md_table
+  md_codecheck += code_gen
 
   return md_table
-
 
 def main():
 
@@ -312,7 +286,7 @@ def main():
 
   md_note_script = '> > > > NOTE: This file was created automatically by script: [' + __file__ + ']('+ SCRIPT_URL +') at ['+ time.strftime("%c") +']\n'
 
-  md_main  = '# PUPPET MODULES \n'
+  md_main  = '# PUPPET MODULES HEALTH\n'
   md_main += '***\n\n'
   md_main += md_note_script
 
@@ -321,8 +295,8 @@ def main():
   #md_stat_head += md_note_script
   md_stat_head += '> > > > NOTE: This file is parte of [PUPPET MODULES]('+ OUTPUT_ALL +') with all metadata modules information.\n\n'
 
-  md_stat_body  = "| MODULE   | LOCAL VERSION   | LATEST VERSION | [CODE WARNS](#modules-code-style-check) | [CODE ERRORS](#modules-code-style-check) |\n"
-  md_stat_body += "| -------- | --------------- | -------------- | ---------- | ----------- |\n"
+  md_stat_body  = "| MODULE   | LOCAL VERSION   | LATEST VERSION | [ALL ALERTS](#modules-code-style-check) | WARNS | ERRORS | GENERAL |\n"
+  md_stat_body += "| -------- | --------------- | -------------- | ---------- | ----------- | ----------- | ----------- |\n"
 
   md_codecheck  = '## MODULES CODE STYLE CHECK\n\n'
   md_codecheck  += '***\n'
