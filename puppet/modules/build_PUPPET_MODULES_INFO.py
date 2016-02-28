@@ -14,6 +14,55 @@ from pprint import pprint
 
 SCRIPT_URL = 'https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py'
 
+
+
+####################################
+def getManifestStyleGuide(modname):
+  # Check that your Puppet manifest conform to the style guide
+  # Require puppet-lint installed on your profile: # gem install puppet-lint
+  # See also: http://puppet-lint.com/
+
+  global code_warn, code_error, code_warn_cnt, code_error_cnt
+  code_warn_tmp = code_error_tmp = ''
+
+  BIN_CHECK='~/bin/puppet-lint'
+  if not os.path.isfile(BIN_CHECK):
+    #code_warn = code_error = code_warn_cnt = code_error_cnt = 'N/I'
+    #return 
+    code_warn = code_error = code_warn_cnt = code_error_cnt = ''
+
+  mod_path = os.path.dirname(os.path.realpath(__file__)) + '/' + modname
+  cmd_run = BIN_CHECK + ' ' + mod_path
+
+  #stream = os.system(cmd_run)
+  fd = os.popen(cmd_run)
+  stream = fd.read()
+  #print "#############> stream=[%s]" % stream
+
+  # Remove Module directory path
+  code_result_by_file = stream.split(mod_path)
+  #pprint(code_result_by_file)
+
+  # Filter stream by error type
+  for line in code_result_by_file:
+    #print '##>> line=' + line
+    line = line.replace('\n','|\n')
+    if 'WARNING:' in line:
+      code_warn += '| `WARNING` |' + line
+      code_warn_tmp += line
+    if 'ERROR:' in line:
+      code_error += '| `ERRORS` |' + line
+      code_error_tmp += line
+      #code_error += line
+
+  #print "warn="+code_warn
+  #print "error="+code_error
+
+  # Get occurrences by original stream
+  code_warn_cnt = str(code_warn_tmp.count('WARNING:'))
+  code_error_cnt = str(code_error_tmp.count('ERROR:'))
+ 
+
 ####################################
 # Read JSON file
 def getJson(file_metadata):
@@ -134,17 +183,16 @@ def parseJSON(data):
       #      data_dependencies += "(%s %s) " % (arr['name'])
 
 
-  #print "DATA_name=%s" % data_name
-  #print "DATA_author=%s" % data_author
-  #print "DATA_os_support=%s" % data_os_support
-  #print "DATA_requirements=%s" % data_requirements
-  #print "DATA_deps=%s" % data_dependencies
-
 def getModuleInfo(metafile, modname):
 
   global data_name, data_version, data_author, data_summary, data_license, \
     data_source, data_project_page, data_issues_url, data_description, data_os_support, \
     data_requirements, data_dependencies, data_tags
+
+  global code_warn, code_error, code_warn_cnt, code_error_cnt
+  code_warn = code_error = code_warn_cnt = code_error_cnt = 'N/I'
+
+  global md_stat_body, md_codecheck
 
   if metafile == "NULL":
     data_name = data_version = data_author = data_summary = data_license = \
@@ -168,6 +216,7 @@ def getModuleInfo(metafile, modname):
   # convert2table
   if modname:
     md_table += "| `ALIAS NAME`         | **%s**                |\n" % modname
+    md_stat_body += "| %s |" % modname
   else:
     md_table += "| `ALIAS NAME`         | `WARN:` _*Undefined value or `metadata.json` cannot be found*_ |\n"
   if data_name:
@@ -178,8 +227,10 @@ def getModuleInfo(metafile, modname):
     pforge = data_name.split('-')
     pforge_url = '[![Puppet Forge](http://img.shields.io/puppetforge/v/%s/%s.svg)](https://forge.puppetlabs.com/%s/%s)' % (pforge[0], pforge[1], pforge[0], pforge[1])
     md_table += "| `VERSION`      | **%s**  %s              |\n" % (data_version, pforge_url)
+    md_stat_body += " %s | %s %s |" % (data_version, data_name, pforge_url)
   else:
     md_table += "| `VERSION`      | `WARN:` _*Undefined value or `metadata.json` cannot be found*_ |\n"
+    md_stat_body += " `NA` | `NA` |"
   if data_summary:
     md_table += "| `SUMMARY`      | **%s**                |\n" % data_summary
   else:
@@ -226,21 +277,63 @@ def getModuleInfo(metafile, modname):
     md_table += "| `ISSUES`       | `WARN:` _*Undefined value or `metadata.json` cannot be found*_ |\n"
   md_table += '\n'
 
+  getManifestStyleGuide(modname)
+  md_stat_body += " %s | %s |\n" % (code_warn_cnt, code_error_cnt)
+  md_codecheck += "\n### MODULE-cst-[%s]\n\n" % (modname)  
+  md_codecheck += "| TYPE  | OCCURRENCES ON MODULE [%s]  |\n" % (modname)
+  md_codecheck += "| ---------- | ------ |\n"
+  #md_codecheck += "| `NAME`     | **%s** |\n" % (modname)
+  md_codecheck += code_warn
+  md_codecheck += code_error
+
+  #print md_stat_body
   #print md_table
+
   return md_table
 
 
 def main():
 
-  global mod_wo_metadata
-  OUTPUT_FILE = 'PUPPET_MODULES.md'
+  global mod_wo_metadata, md_stat_head
+  global md_stat_body, md_codecheck
 
-  if os.path.isfile(OUTPUT_FILE):
-    os.remove(OUTPUT_FILE)
+  OUTPUT_INFO = 'PUPPET_MODULES_INFO.md'
+  OUTPUT_STAT = 'PUPPET_MODULES_STAT.md'
+  OUTPUT_ALL = 'PUPPET_MODULES.md'
 
-  md_table_head  = '## PUPPET MODULES \n\n'
-  md_table_head += '> > > > NOTE: This file was created automatically by script: [' + __file__ + ']('+ SCRIPT_URL +') at ['+ time.strftime("%c") +']\n\n'
-  md_table_index = 'Table of contents: \n'
+  if os.path.isfile(OUTPUT_INFO):
+    os.remove(OUTPUT_INFO)
+
+  if os.path.isfile(OUTPUT_STAT):
+    os.remove(OUTPUT_STAT)
+
+  if os.path.isfile(OUTPUT_ALL):
+    os.remove(OUTPUT_ALL)
+
+  md_note_script = '> > > > NOTE: This file was created automatically by script: [' + __file__ + ']('+ SCRIPT_URL +') at ['+ time.strftime("%c") +']\n'
+
+  md_main  = '# PUPPET MODULES \n'
+  md_main += '***\n\n'
+  md_main += md_note_script
+
+  md_stat_head  = '## MODULES STATS\n'
+  md_stat_head += '***\n'
+  #md_stat_head += md_note_script
+  md_stat_head += '> > > > NOTE: This file is parte of [PUPPET MODULES]('+ OUTPUT_ALL +') with all metadata modules information.\n\n'
+
+  md_stat_body  = "| MODULE   | LOCAL VERSION   | LATEST VERSION | [CODE WARNS](#modules-code-style-check) | [CODE ERRORS](#modules-code-style-check) |\n"
+  md_stat_body += "| -------- | --------------- | -------------- | ---------- | ----------- |\n"
+
+  md_codecheck  = '## MODULES CODE STYLE CHECK\n\n'
+  md_codecheck  += '***\n'
+
+  md_table_head  = '## MODULES INFORMATION \n'
+  md_table_head += '***\n\n'
+  #md_table_head += md_note_script
+  md_table_head += '> > > > NOTE: This file is parte of [PUPPET MODULES]('+ OUTPUT_ALL +') with all metadata modules information.\n\n'
+
+  md_table_head += 'Table of contents: \n'
+  md_table_index = ''
   md_table_body  = '\n'
 
   # Read eacho module on same dir of script
@@ -263,31 +356,57 @@ def main():
     else:
       mod_wo_metadata = False
 
-    print "#> Getting module [%s] info..." % dir_file
+    print "#> Getting module [%s] information..." % dir_file
     md_table_index += '* [MODULE: %s](#module-%s)\n' % (dir_file, dir_file)
     # Check module metadata or warning it
     if mod_wo_metadata:
       metafile = "NULL"
       md_table_body += getModuleInfo(metafile, dir_file)
-      #print " WARN - module has no metadata %s" % metafile
     else:
-      #print " OK - module has metadata [%s]" % metafile
       md_table_body += getModuleInfo(metafile, dir_file)
 
   md_table = md_table_head
   md_table += md_table_index
   md_table += md_table_body
 
+  md_stat = md_stat_head
+  md_stat += md_stat_body
+  #md_stat += md_codecheck
+
+  md_main += '\n'
+  md_main += '1. [MODULES STATS](#modules-stats)\n'
+  md_main += '2. [MODULES INFORMATION](#modules-information)\n'
+  md_main += '3. [MODULES CODE STYLE CHECK](#modules-code-style-check)\n'
+  md_main += '\n\n'
+  md_main += md_stat
+  md_main += md_table
+  md_main += md_codecheck
+
   # Write to file
-  f = open(OUTPUT_FILE, 'w')
+  f = open(OUTPUT_INFO, 'w')
   f.write(md_table)
 
+  f = open(OUTPUT_STAT, 'w')
+  f.write(md_stat)
+  f.write(md_codecheck)
 
-  if os.path.isfile(OUTPUT_FILE):
-    print "SUCCESS - All data saved on file " + OUTPUT_FILE
+  f = open(OUTPUT_ALL, 'w')
+  f.write(md_main)
+
+  if os.path.isfile(OUTPUT_INFO):
+    print "SUCCESS - Modules INFO was saved on file " + OUTPUT_INFO
   else:
-   print "WARNIGN - Cannot found file " + OUTPUT_FILE
+    print "WARNIGN - Cannot found file " + OUTPUT_INFO
 
+  if os.path.isfile(OUTPUT_STAT):
+    print "SUCCESS - Modules STAT was was saved on file " + OUTPUT_STAT
+  else:
+    print "WARNIGN - Cannot found file " + OUTPUT_STAT
+
+  if os.path.isfile(OUTPUT_ALL):
+    print "SUCCESS - Modules Info and Modules stats was was saved on file " + OUTPUT_ALL
+  else:
+    print "WARNIGN - Cannot found file " + OUTPUT_ALL
 
 ######################################
 ##> MAIN
