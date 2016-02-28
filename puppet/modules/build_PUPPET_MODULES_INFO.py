@@ -9,7 +9,7 @@
 # Script URL: https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py
 #
 
-import json, ast, os
+import json, ast, os, time
 from pprint import pprint
 
 SCRIPT_URL = 'https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py'
@@ -239,7 +239,7 @@ def main():
     os.remove(OUTPUT_FILE)
 
   md_table_head  = '## PUPPET MODULES \n\n'
-  md_table_head += '> > > > NOTE: This file was created automatically by script: [' + __file__ + ']('+ SCRIPT_URL +')\n\n'
+  md_table_head += '> > > > NOTE: This file was created automatically by script: [' + __file__ + ']('+ SCRIPT_URL +') at ['+ time.strftime("%c") +']\n\n'
   md_table_index = 'Table of contents: \n'
   md_table_body  = '\n'
 
