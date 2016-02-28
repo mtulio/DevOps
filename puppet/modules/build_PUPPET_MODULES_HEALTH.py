@@ -17,13 +17,13 @@
 #
 # Created by Marco Tulio R Braga <git@mtulio.eng.br>
 # Created at Feb, 28 2015
-# Script URL: https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py
+# Script URL: https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_HEALTH.py
 #
 
 import json, ast, os, time
 from pprint import pprint
 
-SCRIPT_URL = 'https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py'
+SCRIPT_URL = 'https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_HEALTH.py'
 
 ####################################
 def getManifestStyleGuide(modname):
