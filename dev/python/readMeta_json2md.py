@@ -17,7 +17,7 @@ def getJson(file_metadata):
   with open(file_metadata) as data_file:    
     data_jsonU = json.load(data_file)
 
-  #pprint(data_jsonU)
+  pprint(data_jsonU)
   
   #> PARSING JSON data
   # remove literal 'u'
@@ -29,7 +29,8 @@ def getJson(file_metadata):
   #pprint(data_ast['requirements'][0]['version_requirement'])
 
   #> PRINT VALUES
-  #pprint(data)
+#  if file_metadata == 'motd/metadata.json':
+#  pprint(data_jsonU)
 
   return ast.literal_eval(json.dumps(data_jsonU))
 
@@ -46,20 +47,15 @@ def parseJSON(data):
 #    data_source = data_project_page = data_issues_url = data_description = data_os_support = \
 #    data_requirements = data_dependencies = ''
 
-
   ##> Get all keys available on metadata
   metadata_keys = data.keys()
-  #print "KEYS=%s" % metadata_keys
-
   count = 0
 
   ###> Get metadata keys
   for key in metadata_keys:
     count += 1
-    #print "[%d] - %s" % (count, key)
     if key == 'name':
       data_name = data['name']
-      #print "NAME=%s" % data['name']
     if key == 'version':
       data_version = data['version']
     if key == 'author':
@@ -96,12 +92,7 @@ def parseJSON(data):
         for arr in data_LIST:
           data_dependencies += "(%s %s) " % (arr['name'], arr['version_requirement'])
 
-  #print "DATA_name=%s" % data_name
-  #print "DATA_author=%s" % data_author
-  #print "DATA_os_support=%s" % data_os_support
-  #print "DATA_requirements=%s" % data_requirements
-  #print "DATA_deps=%s" % data_dependencies
-
+##################
 def getModuleInfo(metafile, modname):
 
   global data_name, data_version, data_author, data_summary, data_license, \
