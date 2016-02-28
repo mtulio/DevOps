@@ -187,13 +187,13 @@ def getModuleInfo(metafile, modname):
 
   md_table = '### MODULE-[' + modname + ']\n\n'
   #md_table += ' Module directory: ' + os.path.dirname(os.path.realpath(__file__)) + __file__ + '\n\n'
-  md_table += "| METADATA       | VALUE                 |\n"
-  md_table += "| -------------- | --------------------- |\n"
+  md_table += "| **METADATA**  | **VALUE**  |\n"
+  md_table += "|:-------------:|:-----------|\n"
 
   # convert2table
   if modname:
     md_table += "| `ALIAS NAME`         | **%s**                |\n" % modname
-    md_stat_body += "| %s |" % modname
+    md_stat_body += "| [%s](#module-%s) |" % (modname, modname)
   else:
     md_table += "| `ALIAS NAME`         | `WARN:` _*Undefined value or `metadata.json` cannot be found*_ |\n"
   if data_name:
@@ -257,8 +257,8 @@ def getModuleInfo(metafile, modname):
   getManifestStyleGuide(modname)
   md_stat_body += " %s | %s | %s | %s |\n" % (code_all_cnt, code_warn_cnt, code_error_cnt, code_gen_cnt)
   md_codecheck += "\n### MODULE-cst-[%s]\n\n" % (modname)  
-  md_codecheck += "| TYPE  | OCCURRENCES ON MODULE [%s]  |\n" % (modname)
-  md_codecheck += "| ---------- | ------ |\n"
+  md_codecheck += "| **TYPE**  | **OCCURRENCES ON MODULE [%s](#module-%s)**  |\n" % (modname, modname)
+  md_codecheck += "|:---------:|:----------------------------------------|\n"
   #md_codecheck += "| `NAME`     | **%s** |\n" % (modname)
   md_codecheck += code_warn
   md_codecheck += code_error
@@ -295,8 +295,8 @@ def main():
   #md_stat_head += md_note_script
   md_stat_head += '> > > > NOTE: This file is parte of [PUPPET MODULES]('+ OUTPUT_ALL +') with all metadata modules information.\n\n'
 
-  md_stat_body  = "| MODULE   | LOCAL VERSION   | LATEST VERSION | [ALL ALERTS](#modules-code-style-check) | WARNS | ERRORS | GENERAL |\n"
-  md_stat_body += "| -------- | --------------- | -------------- | ---------- | ----------- | ----------- | ----------- |\n"
+  md_stat_body  = "| **MODULE** | **LOCAL VERSION** | **LATEST VERSION** | **[ALL ALERTS](#modules-code-style-check)** | **WARNS** | **ERRORS** | **GENERAL** |\n"
+  md_stat_body += "|:------:|:-------------:|:--------------:|:---------------------------------------:|:-----:|:------:|:-------:|\n"
 
   md_codecheck  = '## MODULES CODE STYLE CHECK\n\n'
   md_codecheck  += '***\n'

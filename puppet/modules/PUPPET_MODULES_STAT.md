@@ -4,31 +4,31 @@
 
 | MODULE   | LOCAL VERSION   | LATEST VERSION | [ALL ALERTS](#modules-code-style-check) | WARNS | ERRORS | GENERAL |
 | -------- | --------------- | -------------- | ---------- | ----------- | ----------- | ----------- |
-| apt | 2.2.1 | puppetlabs-apt [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/apt.svg)](https://forge.puppetlabs.com/puppetlabs/apt) | 29 | 29 | 0 | 0 |
-| stdlib | 4.10.0 | puppetlabs-stdlib [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/stdlib.svg)](https://forge.puppetlabs.com/puppetlabs/stdlib) | 6 | 6 | 0 | 0 |
-| 0_REPO | `NA` | `NA` | 0 | 0 | 0 | 0 |
-| dnssec | 1.0.2 | mtulio-dnssec [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/dnssec.svg)](https://forge.puppetlabs.com/mtulio/dnssec) | 8 | 8 | 0 | 0 |
-| ssh | 1.3.1 | mtulio-ssh [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/ssh.svg)](https://forge.puppetlabs.com/mtulio/ssh) | 4 | 4 | 0 | 0 |
-| registry | 1.1.3 | puppetlabs-registry [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/registry.svg)](https://forge.puppetlabs.com/puppetlabs/registry) | 8 | 4 | 4 | 0 |
-| dns | 3.1.0 | theforeman-dns [![Puppet Forge](http://img.shields.io/puppetforge/v/theforeman/dns.svg)](https://forge.puppetlabs.com/theforeman/dns) | 5 | 5 | 0 | 0 |
-| nfs | 0.1.2 | gnubilafrance-nfs [![Puppet Forge](http://img.shields.io/puppetforge/v/gnubilafrance/nfs.svg)](https://forge.puppetlabs.com/gnubilafrance/nfs) | 7 | 7 | 0 | 0 |
-| nginx | `NA` | `NA` | 42 | 38 | 4 | 0 |
-| apache | `NA` | `NA` | 48 | 31 | 17 | 0 |
-| git | 1.0.0 | jproyo-git [![Puppet Forge](http://img.shields.io/puppetforge/v/jproyo/git.svg)](https://forge.puppetlabs.com/jproyo/git) | 8 | 8 | 0 | 0 |
-| firewall | 1.7.2 | puppetlabs-firewall [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/firewall.svg)](https://forge.puppetlabs.com/puppetlabs/firewall) | 14 | 14 | 0 | 0 |
-| concat | 1.2.5 | puppetlabs-concat [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/concat.svg)](https://forge.puppetlabs.com/puppetlabs/concat) | 12 | 12 | 0 | 0 |
-| filedemo | `NA` | `NA` | 23 | 17 | 6 | 0 |
-| linux | 1.1.1 | mtulio-linux [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/linux.svg)](https://forge.puppetlabs.com/mtulio/linux) | 1 | 1 | 0 | 0 |
-| zabbix | 1.1.1 | mtulio-zabbix [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/zabbix.svg)](https://forge.puppetlabs.com/mtulio/zabbix) | 3 | 3 | 0 | 0 |
-| roles | 1.0.0 | mtulio-roles [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/roles.svg)](https://forge.puppetlabs.com/mtulio/roles) | 0 | 0 | 0 | 0 |
-| profiles | 1.1.1 | mtulio-profiles [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/profiles.svg)](https://forge.puppetlabs.com/mtulio/profiles) | 7 | 7 | 0 | 0 |
+| [apt](#module-apt) | 2.2.1 | puppetlabs-apt [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/apt.svg)](https://forge.puppetlabs.com/puppetlabs/apt) | 29 | 29 | 0 | 0 |
+| [stdlib](#module-stdlib) | 4.10.0 | puppetlabs-stdlib [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/stdlib.svg)](https://forge.puppetlabs.com/puppetlabs/stdlib) | 6 | 6 | 0 | 0 |
+| [0_REPO](#module-0_REPO) | `NA` | `NA` | 0 | 0 | 0 | 0 |
+| [dnssec](#module-dnssec) | 1.0.2 | mtulio-dnssec [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/dnssec.svg)](https://forge.puppetlabs.com/mtulio/dnssec) | 8 | 8 | 0 | 0 |
+| [ssh](#module-ssh) | 1.3.1 | mtulio-ssh [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/ssh.svg)](https://forge.puppetlabs.com/mtulio/ssh) | 4 | 4 | 0 | 0 |
+| [registry](#module-registry) | 1.1.3 | puppetlabs-registry [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/registry.svg)](https://forge.puppetlabs.com/puppetlabs/registry) | 8 | 4 | 4 | 0 |
+| [dns](#module-dns) | 3.1.0 | theforeman-dns [![Puppet Forge](http://img.shields.io/puppetforge/v/theforeman/dns.svg)](https://forge.puppetlabs.com/theforeman/dns) | 5 | 5 | 0 | 0 |
+| [nfs](#module-nfs) | 0.1.2 | gnubilafrance-nfs [![Puppet Forge](http://img.shields.io/puppetforge/v/gnubilafrance/nfs.svg)](https://forge.puppetlabs.com/gnubilafrance/nfs) | 7 | 7 | 0 | 0 |
+| [nginx](#module-nginx) | `NA` | `NA` | 42 | 38 | 4 | 0 |
+| [apache](#module-apache) | `NA` | `NA` | 48 | 31 | 17 | 0 |
+| [git](#module-git) | 1.0.0 | jproyo-git [![Puppet Forge](http://img.shields.io/puppetforge/v/jproyo/git.svg)](https://forge.puppetlabs.com/jproyo/git) | 8 | 8 | 0 | 0 |
+| [firewall](#module-firewall) | 1.7.2 | puppetlabs-firewall [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/firewall.svg)](https://forge.puppetlabs.com/puppetlabs/firewall) | 14 | 14 | 0 | 0 |
+| [concat](#module-concat) | 1.2.5 | puppetlabs-concat [![Puppet Forge](http://img.shields.io/puppetforge/v/puppetlabs/concat.svg)](https://forge.puppetlabs.com/puppetlabs/concat) | 12 | 12 | 0 | 0 |
+| [filedemo](#module-filedemo) | `NA` | `NA` | 23 | 17 | 6 | 0 |
+| [linux](#module-linux) | 1.1.1 | mtulio-linux [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/linux.svg)](https://forge.puppetlabs.com/mtulio/linux) | 1 | 1 | 0 | 0 |
+| [zabbix](#module-zabbix) | 1.1.1 | mtulio-zabbix [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/zabbix.svg)](https://forge.puppetlabs.com/mtulio/zabbix) | 3 | 3 | 0 | 0 |
+| [roles](#module-roles) | 1.0.0 | mtulio-roles [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/roles.svg)](https://forge.puppetlabs.com/mtulio/roles) | 0 | 0 | 0 | 0 |
+| [profiles](#module-profiles) | 1.1.1 | mtulio-profiles [![Puppet Forge](http://img.shields.io/puppetforge/v/mtulio/profiles.svg)](https://forge.puppetlabs.com/mtulio/profiles) | 7 | 7 | 0 | 0 |
 ## MODULES CODE STYLE CHECK
 
 ***
 
 ### MODULE-cst-[apt]
 
-| TYPE  | OCCURRENCES ON MODULE [apt]  |
+| TYPE  | OCCURRENCES ON MODULE [apt](#module-apt)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/init.pp - WARNING: class inheriting from params class on line 11|
 | `WARNING` |/manifests/key.pp - WARNING: line has more than 80 characters on line 17|
@@ -62,7 +62,7 @@
 
 ### MODULE-cst-[stdlib]
 
-| TYPE  | OCCURRENCES ON MODULE [stdlib]  |
+| TYPE  | OCCURRENCES ON MODULE [stdlib](#module-stdlib)  |
 | ---------- | ------ |
 | `WARNING` |/examples/has_interface_with.pp - WARNING: line has more than 80 characters on line 4|
 | `WARNING` |/examples/has_interface_with.pp - WARNING: line has more than 80 characters on line 5|
@@ -73,12 +73,12 @@
 
 ### MODULE-cst-[0_REPO]
 
-| TYPE  | OCCURRENCES ON MODULE [0_REPO]  |
+| TYPE  | OCCURRENCES ON MODULE [0_REPO](#module-0_REPO)  |
 | ---------- | ------ |
 
 ### MODULE-cst-[dnssec]
 
-| TYPE  | OCCURRENCES ON MODULE [dnssec]  |
+| TYPE  | OCCURRENCES ON MODULE [dnssec](#module-dnssec)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/init.pp - WARNING: class inheriting from params class on line 30|
 | `WARNING` |/manifests/init.pp - WARNING: indentation of => is not properly aligned on line 82|
@@ -91,7 +91,7 @@
 
 ### MODULE-cst-[ssh]
 
-| TYPE  | OCCURRENCES ON MODULE [ssh]  |
+| TYPE  | OCCURRENCES ON MODULE [ssh](#module-ssh)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/init.pp - WARNING: class inheriting from params class on line 10|
 | `WARNING` |/manifests/sshd_config.pp - WARNING: line has more than 80 characters on line 56|
@@ -100,7 +100,7 @@
 
 ### MODULE-cst-[registry]
 
-| TYPE  | OCCURRENCES ON MODULE [registry]  |
+| TYPE  | OCCURRENCES ON MODULE [registry](#module-registry)  |
 | ---------- | ------ |
 | `WARNING` |/examples/registry_examples.pp - WARNING: double quoted string containing no variables on line 72|
 | `WARNING` |/examples/registry_examples.pp - WARNING: double quoted string containing no variables on line 79|
@@ -113,7 +113,7 @@
 
 ### MODULE-cst-[dns]
 
-| TYPE  | OCCURRENCES ON MODULE [dns]  |
+| TYPE  | OCCURRENCES ON MODULE [dns](#module-dns)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/init.pp - WARNING: class inheriting from params class on line 22|
 | `WARNING` |/manifests/init.pp - WARNING: line has more than 80 characters on line 26|
@@ -123,7 +123,7 @@
 
 ### MODULE-cst-[nfs]
 
-| TYPE  | OCCURRENCES ON MODULE [nfs]  |
+| TYPE  | OCCURRENCES ON MODULE [nfs](#module-nfs)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/server/debian.pp - WARNING: class not documented on line 1|
 | `WARNING` |/manifests/server/redhat.pp - WARNING: class not documented on line 1|
@@ -135,7 +135,7 @@
 
 ### MODULE-cst-[nginx]
 
-| TYPE  | OCCURRENCES ON MODULE [nginx]  |
+| TYPE  | OCCURRENCES ON MODULE [nginx](#module-nginx)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/service.pp - WARNING: class not documented on line 1|
 | `WARNING` |/manifests/service.pp - WARNING: ensure found on line but it's not the first attribute on line 5|
@@ -182,7 +182,7 @@
 
 ### MODULE-cst-[apache]
 
-| TYPE  | OCCURRENCES ON MODULE [apache]  |
+| TYPE  | OCCURRENCES ON MODULE [apache](#module-apache)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/service.pp - WARNING: class not documented on line 1|
 | `WARNING` |/manifests/service.pp - WARNING: ensure found on line but it's not the first attribute on line 5|
@@ -235,7 +235,7 @@
 
 ### MODULE-cst-[git]
 
-| TYPE  | OCCURRENCES ON MODULE [git]  |
+| TYPE  | OCCURRENCES ON MODULE [git](#module-git)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/repo.pp - WARNING: line has more than 80 characters on line 7|
 | `WARNING` |/manifests/repo.pp - WARNING: line has more than 80 characters on line 15|
@@ -248,7 +248,7 @@
 
 ### MODULE-cst-[firewall]
 
-| TYPE  | OCCURRENCES ON MODULE [firewall]  |
+| TYPE  | OCCURRENCES ON MODULE [firewall](#module-firewall)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/init.pp - WARNING: class inheriting from params class on line 18|
 | `WARNING` |/manifests/linux.pp - WARNING: class inheriting from params class on line 18|
@@ -267,7 +267,7 @@
 
 ### MODULE-cst-[concat]
 
-| TYPE  | OCCURRENCES ON MODULE [concat]  |
+| TYPE  | OCCURRENCES ON MODULE [concat](#module-concat)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/setup.pp - WARNING: line has more than 80 characters on line 14|
 | `WARNING` |/manifests/setup.pp - WARNING: line has more than 80 characters on line 20|
@@ -284,7 +284,7 @@
 
 ### MODULE-cst-[filedemo]
 
-| TYPE  | OCCURRENCES ON MODULE [filedemo]  |
+| TYPE  | OCCURRENCES ON MODULE [filedemo](#module-filedemo)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/init.pp - WARNING: class inheriting from params class on line 1|
 | `WARNING` |/manifests/init.pp - WARNING: class not documented on line 1|
@@ -312,13 +312,13 @@
 
 ### MODULE-cst-[linux]
 
-| TYPE  | OCCURRENCES ON MODULE [linux]  |
+| TYPE  | OCCURRENCES ON MODULE [linux](#module-linux)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/init.pp - WARNING: class inheriting from params class on line 17|
 
 ### MODULE-cst-[zabbix]
 
-| TYPE  | OCCURRENCES ON MODULE [zabbix]  |
+| TYPE  | OCCURRENCES ON MODULE [zabbix](#module-zabbix)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/repo.pp - WARNING: line has more than 80 characters on line 7|
 | `WARNING` |/manifests/repo.pp - WARNING: line has more than 80 characters on line 16|
@@ -326,12 +326,12 @@
 
 ### MODULE-cst-[roles]
 
-| TYPE  | OCCURRENCES ON MODULE [roles]  |
+| TYPE  | OCCURRENCES ON MODULE [roles](#module-roles)  |
 | ---------- | ------ |
 
 ### MODULE-cst-[profiles]
 
-| TYPE  | OCCURRENCES ON MODULE [profiles]  |
+| TYPE  | OCCURRENCES ON MODULE [profiles](#module-profiles)  |
 | ---------- | ------ |
 | `WARNING` |/manifests/init.pp - WARNING: class inheriting from params class on line 21|
 | `WARNING` |/manifests/linux.pp - WARNING: class inheriting from params class on line 32|
