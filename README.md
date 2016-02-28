@@ -1,7 +1,7 @@
 # PUPPET MODULES HEALTH
 ***
 
-> > > > NOTE: This file was created automatically by script: [./build_PUPPET_MODULES_INFO.py](https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_INFO.py) at [Sun Feb 28 17:06:07 2016]
+> > > > NOTE: This file was created automatically by script: [./build_PUPPET_MODULES_HEALTH.py](https://github.com/mtulio/DevOps/blob/master/puppet/modules/build_PUPPET_MODULES_HEALTH.py) at [Sun Feb 28 17:36:11 2016]
 
 1. [MODULES STATS](#modules-stats)
 2. [MODULES INFORMATION](#modules-information)
