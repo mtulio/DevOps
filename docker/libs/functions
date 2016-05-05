@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#
+# Functions for script to manage docker - docker main commands
+#
+# Created at 05 May 2016
+# Author: Marco Tulio R Braga
+#
+
+function FC_LIB_STATUS() {
+  echo "${FUNCNAME[0]} : Listing dockers"
+}
+
