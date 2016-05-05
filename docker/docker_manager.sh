@@ -41,6 +41,7 @@ fi
 # MAIN
 case $1 in
   "status"|"stat") FC_LIB_STATUS;;
+  "images"|"im") FC_LIB_IMAGES;;
   *) FC_HELP;;
 esac
 

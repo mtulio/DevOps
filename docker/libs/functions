@@ -7,7 +7,24 @@
 # Author: Marco Tulio R Braga
 #
 
+BIN_DK="$(which docker)"
+
 function FC_LIB_STATUS() {
   echo "${FUNCNAME[0]} : Listing dockers"
+  $BIN_DK ps
 }
 
+function FC_LIB_IMAGES() {
+  echo "${FUNCNAME[0]} : Listing images available"
+  $BIN_DK images
+}
+
+function FC_LIB_START() {
+  DOCK_NAME=$1
+  echo "${FUNCNAME[0]} : Starting Docker '$DOCK_NAME'"
+
+}
+
+function FC_LIB_STOP() {
+
+}
