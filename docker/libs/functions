@@ -22,9 +22,13 @@ function FC_LIB_IMAGES() {
 function FC_LIB_START() {
   DOCK_NAME=$1
   echo "${FUNCNAME[0]} : Starting Docker '$DOCK_NAME'"
-
+  docker run -i -t -d mtulio:centos6 /sbin/init
 }
 
 function FC_LIB_STOP() {
+  docker stop DOCKER_ID
+}
 
+function FC_LIB_BUILD() {
+  docker build mtulio:centos6 .
 }
