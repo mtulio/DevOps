@@ -1,9 +1,0 @@
-[local]
-localhost
-localhost.localdomain
-127.0.0.1
-
-[aws]
-ec2-52-42-72-59.us-west-2.compute.amazonaws.com
-
-
